@@ -11,11 +11,11 @@ interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'SafariKenya | Experience Kenya From Bush to Beach',
+  title: 'Awili Safaris | Experience Kenya From Bush to Beach',
   description: 'Discover unforgettable safari experiences in Kenya. From the Maasai Mara to Diani Beach, book your dream African adventure with Kenya\'s most trusted tour operator.',
-  keywords: 'Kenya safari, Maasai Mara, Diani Beach, African safari, Kenya tours, wildlife safari, Amboseli, Samburu, Kenya holiday packages, safari packages Kenya',
+  keywords: 'Kenya safari, Maasai Mara, Diani Beach, African safari, Kenya tours, wildlife safari, Amboseli, Samburu, Kenya holiday packages, safari packages Kenya, Awili Safaris',
   image: '/og-image.jpg',
-  url: 'https://safarikenya.co.ke',
+  url: 'https://awilisafaris.co.ke',
 };
 
 const SEO = ({ 
@@ -83,10 +83,10 @@ const SEO = ({
 export const createOrganizationSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'TravelAgency',
-  name: 'SafariKenya',
+  name: 'Awili Safaris',
   description: 'Kenya\'s most trusted tour operator offering safari and beach holiday packages.',
-  url: 'https://safarikenya.co.ke',
-  logo: 'https://safarikenya.co.ke/logo.png',
+  url: 'https://awilisafaris.co.ke',
+  logo: 'https://awilisafaris.co.ke/logo.png',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Westlands Business Center',
@@ -100,9 +100,9 @@ export const createOrganizationSchema = () => ({
     availableLanguage: ['English', 'Swahili'],
   },
   sameAs: [
-    'https://facebook.com/safarikenya',
-    'https://instagram.com/safarikenya',
-    'https://twitter.com/safarikenya',
+    'https://facebook.com/awilisafaris',
+    'https://instagram.com/awilisafaris',
+    'https://twitter.com/awilisafaris',
   ],
 });
 
