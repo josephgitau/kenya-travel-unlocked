@@ -8,6 +8,7 @@ import { FilterProvider } from "@/contexts/FilterContext";
 import { SearchProvider } from "@/contexts/SearchContext";
 import Index from "./pages/Index";
 import PackageDetail from "./pages/PackageDetail";
+import ExperienceDetail from "./pages/ExperienceDetail";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Admin from "./pages/Admin";
@@ -27,6 +28,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/package/:packageId" element={<PackageDetail />} />
+              <Route path="/experience/:experienceType" element={<ExperienceDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/admin" element={<Admin />} />

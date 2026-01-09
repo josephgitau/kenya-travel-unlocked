@@ -175,17 +175,17 @@ const DestinationsSection = () => {
               From the iconic Maasai Mara to the pristine shores of Diani, discover unforgettable destinations.
             </p>
           </div>
-          <a
-            href="#experiences"
+          <Link
+            to="/#experiences"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
           >
-            Explore Experiences
+            Browse by Category
             <ArrowRight className="w-5 h-5" />
-          </a>
+          </Link>
         </div>
 
         {/* Search Results Indicator */}

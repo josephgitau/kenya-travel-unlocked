@@ -1,4 +1,5 @@
 import { ArrowRight, Binoculars, Umbrella, Mountain, Coffee } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import maraImage from '@/assets/hero-safari.jpg';
 import dianiImage from '@/assets/diani-beach.jpg';
 import samburuImage from '@/assets/samburu.jpg';
@@ -56,21 +57,11 @@ const experiences: Experience[] = [
 const ExperienceCard = ({ experience, index }: { experience: Experience; index: number }) => {
   const Icon = experience.icon;
   
-  const handleClick = () => {
-    const destinationsSection = document.getElementById('destinations');
-    if (destinationsSection) {
-      destinationsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-  
   return (
-    <article 
-      className="experience-card group min-h-[320px] lg:min-h-[400px] cursor-pointer"
+    <Link 
+      to={`/experience/${experience.id}`}
+      className="experience-card group min-h-[320px] lg:min-h-[400px] cursor-pointer block"
       style={{ animationDelay: `${index * 0.1}s` }}
-      onClick={handleClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
       {/* Background Image */}
       <div
@@ -109,7 +100,7 @@ const ExperienceCard = ({ experience, index }: { experience: Experience; index: 
           <ArrowRight className="w-5 h-5" />
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 
