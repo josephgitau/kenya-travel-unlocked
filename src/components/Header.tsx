@@ -43,10 +43,10 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-xl">S</span>
+              <span className="text-primary-foreground font-display font-bold text-xl">A</span>
             </div>
             <span className={`font-display text-2xl font-bold ${isScrolled ? 'text-foreground' : 'text-white'}`}>
-              Safari<span className="text-primary">Kenya</span>
+              Awili<span className="text-primary">Safaris</span>
             </span>
           </a>
 

@@ -36,10 +36,10 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <a href="/" className="flex items-center gap-2 mb-6">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xl">S</span>
+                <span className="text-primary-foreground font-display font-bold text-xl">A</span>
               </div>
               <span className="font-display text-2xl font-bold text-white">
-                Safari<span className="text-primary">Kenya</span>
+                Awili<span className="text-primary">Safaris</span>
               </span>
             </a>
             <p className="text-white/70 mb-6">
@@ -107,8 +107,8 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <a href="mailto:info@safarkenya.co.ke" className="text-white/70 hover:text-primary transition-colors">
-                  info@safarikenya.co.ke
+                <a href="mailto:info@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors">
+                  info@awilisafaris.co.ke
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -145,7 +145,7 @@ const Footer = () => {
 
             {/* Copyright */}
             <div className="text-sm text-white/60 text-center lg:text-right">
-              © {currentYear} SafariKenya. All rights reserved.
+              © {currentYear} Awili Safaris. All rights reserved.
             </div>
           </div>
         </div>

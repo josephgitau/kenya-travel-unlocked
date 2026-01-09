@@ -89,8 +89,8 @@ const ContactSection = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      content: 'info@safarikenya.co.ke',
-      href: 'mailto:info@safarikenya.co.ke',
+      content: 'info@awilisafaris.co.ke',
+      href: 'mailto:info@awilisafaris.co.ke',
     },
     {
       icon: Clock,
