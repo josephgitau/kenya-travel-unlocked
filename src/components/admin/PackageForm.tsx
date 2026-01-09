@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X } from 'lucide-react';
+import ImageUpload from './ImageUpload';
 
 interface PackageFormData {
   name: string;
@@ -20,6 +21,7 @@ interface PackageFormData {
   group_size: string;
   best_time: string;
   is_active: boolean;
+  images: string[];
 }
 
 interface PackageFormProps {
@@ -44,6 +46,7 @@ const PackageForm = ({ initialData, onSubmit, onCancel, isLoading }: PackageForm
     group_size: '2-8 guests',
     best_time: '',
     is_active: true,
+    images: [],
     ...initialData,
   });
 
@@ -56,7 +59,7 @@ const PackageForm = ({ initialData, onSubmit, onCancel, isLoading }: PackageForm
     }
   }, [formData.name, initialData?.slug]);
 
-  const handleChange = (field: keyof PackageFormData, value: string | number | boolean) => {
+  const handleChange = (field: keyof PackageFormData, value: string | number | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -208,6 +211,15 @@ const PackageForm = ({ initialData, onSubmit, onCancel, isLoading }: PackageForm
           onChange={(e) => handleChange('description', e.target.value)}
           rows={4}
           required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Package Images</Label>
+        <ImageUpload
+          images={formData.images}
+          onChange={(images) => handleChange('images', images)}
+          packageSlug={formData.slug || 'new-package'}
         />
       </div>
 
