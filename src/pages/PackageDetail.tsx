@@ -6,6 +6,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import PhotoGallery from '@/components/PhotoGallery';
 import PricingCalculator from '@/components/PricingCalculator';
 import BookingForm from '@/components/BookingForm';
+import ReviewsSection from '@/components/ReviewsSection';
 import { usePackage } from '@/hooks/usePackages';
 
 // Fallback images
@@ -323,6 +324,9 @@ const PackageDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews Section */}
+      <ReviewsSection packageId={pkg.id} packageName={pkg.name} />
 
       <Footer />
       <WhatsAppButton />
