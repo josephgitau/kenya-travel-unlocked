@@ -1,13 +1,14 @@
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, MapPin, Star, Users, Car, Home, Utensils, Camera, Shield, Check, X, Calendar } from 'lucide-react';
+import { ArrowLeft, Clock, MapPin, Star, Users, Car, Home, Utensils, Camera, Shield, Check, X, Calendar, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import PhotoGallery from '@/components/PhotoGallery';
 import PricingCalculator from '@/components/PricingCalculator';
 import BookingForm from '@/components/BookingForm';
+import { usePackage } from '@/hooks/usePackages';
 
-// Images
+// Fallback images
 import heroImage from '@/assets/hero-safari.jpg';
 import maraLodge from '@/assets/mara-lodge.jpg';
 import maraLions from '@/assets/mara-lions.jpg';
@@ -15,80 +16,76 @@ import maraMigration from '@/assets/mara-migration.jpg';
 import maraGameDrive from '@/assets/mara-game-drive.jpg';
 import maraBalloon from '@/assets/mara-balloon.jpg';
 
-const packageData = {
-  mara: {
-    id: 'mara',
-    name: '3 Days Maasai Mara Safari',
-    tagline: 'Experience the legendary Maasai Mara with game drives and luxurious camp stays',
-    location: 'Narok County, Kenya',
-    duration: '3 Days / 2 Nights',
-    groupSize: '2-6 Guests',
-    rating: 4.9,
-    reviews: 247,
-    heroImage: heroImage,
-    images: [
-      { src: maraLodge, alt: 'Luxury safari lodge overlooking the Mara' },
-      { src: maraLions, alt: 'Lion pride resting under acacia tree' },
-      { src: maraMigration, alt: 'Great Wildebeest Migration crossing the Mara River' },
-      { src: maraGameDrive, alt: 'Safari game drive at sunset' },
-      { src: maraBalloon, alt: 'Hot air balloon safari at sunrise' },
-    ],
-    pricing: {
-      resident: 25000,
-      nonResident: 450,
-      singleSupplement: 8000,
-      childDiscount: 30,
-    },
-    itinerary: [
-      {
-        day: 1,
-        title: 'Nairobi to Maasai Mara',
-        description: 'Depart Nairobi early morning (7:00 AM) and drive through the scenic Great Rift Valley. Stop at the viewpoint for breathtaking views and photo opportunities. Continue to the Mara, arriving in time for lunch at your camp. After settling in, embark on an afternoon game drive to spot the Big 5.',
-        highlights: ['Great Rift Valley viewpoint', 'Scenic drive through Narok', 'Afternoon game drive', 'Sundowner experience'],
-        meals: ['Lunch', 'Dinner'],
-        accommodation: 'Mara Leisure Camp or similar',
-      },
-      {
-        day: 2,
-        title: 'Full Day in the Mara',
-        description: 'Wake up early for a sunrise game drive when predators are most active. Return for a hearty breakfast, then choose to relax or join an optional Maasai village visit. Enjoy another game drive in the afternoon, focusing on the Mara River area where crocodiles and hippos abound.',
-        highlights: ['Sunrise game drive', 'Mara River crossing point', 'Optional Maasai village visit', 'Sundowner with views'],
-        meals: ['Breakfast', 'Lunch', 'Dinner'],
-        accommodation: 'Mara Leisure Camp or similar',
-      },
-      {
-        day: 3,
-        title: 'Mara to Nairobi',
-        description: 'Optional early morning game drive or balloon safari (extra cost). After breakfast, check out and begin the journey back to Nairobi. Stop at local curio shops for souvenirs. Arrive in Nairobi by late afternoon/evening.',
-        highlights: ['Optional balloon safari', 'Final game drive', 'Souvenir shopping', 'Return to Nairobi by 6PM'],
-        meals: ['Breakfast', 'Lunch (picnic)'],
-        accommodation: 'N/A - Return to Nairobi',
-      },
-    ],
-    included: [
-      { icon: Car, text: 'Transport in 4x4 Land Cruiser with pop-up roof' },
-      { icon: Home, text: '2 nights accommodation at safari camp' },
-      { icon: Utensils, text: 'All meals as per itinerary (Full board)' },
-      { icon: Camera, text: 'Park entrance fees & game drives' },
-      { icon: Users, text: 'English-speaking professional driver guide' },
-      { icon: Shield, text: 'Flying Doctors emergency evacuation cover' },
-    ],
-    excluded: [
-      'Tips and gratuities',
-      'Travel insurance',
-      'Drinks and alcoholic beverages',
-      'Hot air balloon safari (USD 450)',
-      'Maasai village visit (USD 25)',
-      'Personal expenses',
-    ],
-    bestTime: 'July to October for the Great Migration, but excellent year-round',
-    difficulty: 'Easy - suitable for all ages',
-  },
+// Map image paths to imported images
+const imageMap: Record<string, string> = {
+  '/src/assets/hero-safari.jpg': heroImage,
+  '/src/assets/mara-lodge.jpg': maraLodge,
+  '/src/assets/mara-lions.jpg': maraLions,
+  '/src/assets/mara-migration.jpg': maraMigration,
+  '/src/assets/mara-game-drive.jpg': maraGameDrive,
+  '/src/assets/mara-balloon.jpg': maraBalloon,
+};
+
+const getImageSrc = (path: string): string => {
+  return imageMap[path] || path;
+};
+
+// Icon mapping for included items
+const getIncludedIcon = (text: string) => {
+  if (text.toLowerCase().includes('transport') || text.toLowerCase().includes('vehicle') || text.toLowerCase().includes('cruiser')) return Car;
+  if (text.toLowerCase().includes('accommodation') || text.toLowerCase().includes('lodge') || text.toLowerCase().includes('camp') || text.toLowerCase().includes('resort')) return Home;
+  if (text.toLowerCase().includes('meal') || text.toLowerCase().includes('breakfast') || text.toLowerCase().includes('lunch') || text.toLowerCase().includes('dinner')) return Utensils;
+  if (text.toLowerCase().includes('game') || text.toLowerCase().includes('safari') || text.toLowerCase().includes('tour') || text.toLowerCase().includes('park')) return Camera;
+  if (text.toLowerCase().includes('guide') || text.toLowerCase().includes('driver')) return Users;
+  return Shield;
 };
 
 const PackageDetail = () => {
   const { packageId } = useParams<{ packageId: string }>();
-  const pkg = packageData[packageId as keyof typeof packageData] || packageData.mara;
+  const { data: pkg, isLoading, error } = usePackage(packageId || '');
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading package details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !pkg) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-32 text-center">
+          <h1 className="font-display text-4xl font-bold text-foreground mb-4">Package Not Found</h1>
+          <p className="text-muted-foreground mb-8">The package you're looking for doesn't exist or has been removed.</p>
+          <Link to="/" className="btn-gold inline-flex items-center gap-2">
+            <ArrowLeft className="w-5 h-5" />
+            Back to Home
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Get hero image (first image or fallback)
+  const heroImg = pkg.images.length > 0 ? getImageSrc(pkg.images[0]) : heroImage;
+  
+  // Prepare gallery images
+  const galleryImages = pkg.images.map((src, index) => ({
+    src: getImageSrc(src),
+    alt: `${pkg.name} - Image ${index + 1}`,
+  }));
+
+  // Prepare included items with icons
+  const includedItems = pkg.included.map((text) => ({
+    icon: getIncludedIcon(text),
+    text,
+  }));
 
   return (
     <div className="min-h-screen bg-background">
@@ -98,7 +95,7 @@ const PackageDetail = () => {
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${pkg.heroImage})` }}
+          style={{ backgroundImage: `url(${heroImg})` }}
         />
         <div className="absolute inset-0 hero-overlay" />
         
@@ -116,12 +113,12 @@ const PackageDetail = () => {
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full">
-                Best Seller
+                {pkg.category || 'Safari'}
               </span>
               <div className="flex items-center gap-1.5 text-white">
                 <Star className="w-4 h-4 fill-primary text-primary" />
-                <span className="font-medium">{pkg.rating}</span>
-                <span className="text-white/60">({pkg.reviews} reviews)</span>
+                <span className="font-medium">{pkg.rating || 4.8}</span>
+                <span className="text-white/60">({pkg.reviews_count || 0} reviews)</span>
               </div>
             </div>
 
@@ -130,7 +127,7 @@ const PackageDetail = () => {
             </h1>
             
             <p className="text-lg text-white/80 mb-6">
-              {pkg.tagline}
+              {pkg.short_description || pkg.description}
             </p>
 
             <div className="flex flex-wrap items-center gap-6 text-white/80">
@@ -144,7 +141,7 @@ const PackageDetail = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-primary" />
-                {pkg.groupSize}
+                {pkg.group_size || '2-8 guests'}
               </div>
             </div>
           </div>
@@ -158,84 +155,96 @@ const PackageDetail = () => {
             {/* Left Column - Itinerary & Details */}
             <div className="lg:col-span-2 space-y-12">
               {/* Photo Gallery */}
-              <div>
-                <h2 className="font-display text-2xl lg:text-3xl font-bold text-foreground mb-6">
-                  Photo Gallery
-                </h2>
-                <PhotoGallery images={pkg.images} />
-              </div>
+              {galleryImages.length > 0 && (
+                <div>
+                  <h2 className="font-display text-2xl lg:text-3xl font-bold text-foreground mb-6">
+                    Photo Gallery
+                  </h2>
+                  <PhotoGallery images={galleryImages} />
+                </div>
+              )}
 
               {/* Day-by-Day Itinerary */}
-              <div>
-                <h2 className="font-display text-2xl lg:text-3xl font-bold text-foreground mb-8">
-                  Day-by-Day Itinerary
-                </h2>
-                
-                <div className="space-y-6">
-                  {pkg.itinerary.map((day, index) => (
-                    <div
-                      key={day.day}
-                      className="relative pl-8 lg:pl-10"
-                    >
-                      {/* Timeline Line */}
-                      {index !== pkg.itinerary.length - 1 && (
-                        <div className="absolute left-[13px] lg:left-[17px] top-12 w-0.5 h-[calc(100%+24px)] bg-border" />
-                      )}
-                      
-                      {/* Day Number */}
-                      <div className="absolute left-0 top-0 w-7 h-7 lg:w-9 lg:h-9 rounded-full bg-primary flex items-center justify-center">
-                        <span className="text-primary-foreground font-bold text-sm lg:text-base">
-                          {day.day}
-                        </span>
-                      </div>
-
-                      {/* Content Card */}
-                      <div className="bg-card rounded-2xl p-6 lg:p-8 shadow-soft border border-border">
-                        <h3 className="font-display text-xl lg:text-2xl font-bold text-foreground mb-3">
-                          Day {day.day}: {day.title}
-                        </h3>
+              {pkg.itinerary.length > 0 && (
+                <div>
+                  <h2 className="font-display text-2xl lg:text-3xl font-bold text-foreground mb-8">
+                    Day-by-Day Itinerary
+                  </h2>
+                  
+                  <div className="space-y-6">
+                    {pkg.itinerary.map((day, index) => (
+                      <div
+                        key={day.day}
+                        className="relative pl-8 lg:pl-10"
+                      >
+                        {/* Timeline Line */}
+                        {index !== pkg.itinerary.length - 1 && (
+                          <div className="absolute left-[13px] lg:left-[17px] top-12 w-0.5 h-[calc(100%+24px)] bg-border" />
+                        )}
                         
-                        <p className="text-muted-foreground mb-6 leading-relaxed">
-                          {day.description}
-                        </p>
-
-                        {/* Highlights */}
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
-                            Highlights
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {day.highlights.map((highlight) => (
-                              <span
-                                key={highlight}
-                                className="text-sm bg-primary/10 text-primary font-medium px-3 py-1.5 rounded-full"
-                              >
-                                {highlight}
-                              </span>
-                            ))}
-                          </div>
+                        {/* Day Number */}
+                        <div className="absolute left-0 top-0 w-7 h-7 lg:w-9 lg:h-9 rounded-full bg-primary flex items-center justify-center">
+                          <span className="text-primary-foreground font-bold text-sm lg:text-base">
+                            {day.day}
+                          </span>
                         </div>
 
-                        {/* Meals & Accommodation */}
-                        <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border">
-                          <div className="flex items-center gap-2 text-sm">
-                            <Utensils className="w-4 h-4 text-primary" />
-                            <span className="text-muted-foreground">
-                              Meals: <span className="text-foreground font-medium">{day.meals.join(', ')}</span>
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm">
-                            <Home className="w-4 h-4 text-primary" />
-                            <span className="text-muted-foreground">
-                              Stay: <span className="text-foreground font-medium">{day.accommodation}</span>
-                            </span>
-                          </div>
+                        {/* Content Card */}
+                        <div className="bg-card rounded-2xl p-6 lg:p-8 shadow-soft border border-border">
+                          <h3 className="font-display text-xl lg:text-2xl font-bold text-foreground mb-3">
+                            Day {day.day}: {day.title}
+                          </h3>
+                          
+                          <p className="text-muted-foreground mb-6 leading-relaxed">
+                            {day.description}
+                          </p>
+
+                          {/* Highlights */}
+                          {day.highlights && day.highlights.length > 0 && (
+                            <div className="mb-6">
+                              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
+                                Highlights
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {day.highlights.map((highlight) => (
+                                  <span
+                                    key={highlight}
+                                    className="text-sm bg-primary/10 text-primary font-medium px-3 py-1.5 rounded-full"
+                                  >
+                                    {highlight}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Meals & Accommodation */}
+                          {(day.meals || day.accommodation) && (
+                            <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border">
+                              {day.meals && day.meals.length > 0 && (
+                                <div className="flex items-center gap-2 text-sm">
+                                  <Utensils className="w-4 h-4 text-primary" />
+                                  <span className="text-muted-foreground">
+                                    Meals: <span className="text-foreground font-medium">{day.meals.join(', ')}</span>
+                                  </span>
+                                </div>
+                              )}
+                              {day.accommodation && (
+                                <div className="flex items-center gap-2 text-sm">
+                                  <Home className="w-4 h-4 text-primary" />
+                                  <span className="text-muted-foreground">
+                                    Stay: <span className="text-foreground font-medium">{day.accommodation}</span>
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* What's Included / Excluded */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -246,7 +255,7 @@ const PackageDetail = () => {
                     What's Included
                   </h3>
                   <ul className="space-y-4">
-                    {pkg.included.map((item, index) => (
+                    {includedItems.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <div className="w-8 h-8 rounded-lg bg-safari/10 flex items-center justify-center shrink-0">
                           <item.icon className="w-4 h-4 text-safari" />
@@ -285,14 +294,14 @@ const PackageDetail = () => {
                       <Calendar className="w-5 h-5 text-primary" />
                       <span className="font-semibold text-foreground">Best Time to Visit</span>
                     </div>
-                    <p className="text-muted-foreground text-sm">{pkg.bestTime}</p>
+                    <p className="text-muted-foreground text-sm">{pkg.best_time || 'Year-round'}</p>
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <Users className="w-5 h-5 text-primary" />
                       <span className="font-semibold text-foreground">Difficulty Level</span>
                     </div>
-                    <p className="text-muted-foreground text-sm">{pkg.difficulty}</p>
+                    <p className="text-muted-foreground text-sm">{pkg.difficulty || 'Easy to Moderate'}</p>
                   </div>
                 </div>
               </div>
@@ -301,12 +310,15 @@ const PackageDetail = () => {
             {/* Right Column - Pricing & Booking */}
             <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
               <PricingCalculator
-                residentPrice={pkg.pricing.resident}
-                nonResidentPrice={pkg.pricing.nonResident}
-                singleSupplement={pkg.pricing.singleSupplement}
-                childDiscount={pkg.pricing.childDiscount}
+                residentPrice={pkg.price_resident}
+                nonResidentPrice={pkg.price_non_resident}
+                singleSupplement={Math.round(pkg.price_resident * 0.3)}
+                childDiscount={30}
               />
-              <BookingForm packageName={pkg.name} />
+              <BookingForm 
+                packageId={pkg.id}
+                packageName={pkg.name} 
+              />
             </div>
           </div>
         </div>

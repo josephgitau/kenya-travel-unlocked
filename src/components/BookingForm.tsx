@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Send, Loader2, Check, Calendar, Users, Mail, Phone, User, MessageSquare } from 'lucide-react';
 import { toast } from 'sonner';
+import { useCreateBooking } from '@/hooks/useBooking';
 
 const bookingSchema = z.object({
   fullName: z
@@ -28,6 +29,7 @@ const bookingSchema = z.object({
   guests: z
     .string()
     .min(1, 'Please select number of guests'),
+  isResident: z.boolean().default(false),
   message: z
     .string()
     .trim()
@@ -38,40 +40,58 @@ const bookingSchema = z.object({
 type BookingFormData = z.infer<typeof bookingSchema>;
 
 interface BookingFormProps {
+  packageId?: string;
   packageName: string;
 }
 
-const BookingForm = ({ packageName }: BookingFormProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const BookingForm = ({ packageId, packageName }: BookingFormProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const createBooking = useCreateBooking();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      isResident: false,
+    },
   });
 
+  const parseGuestCount = (guestString: string): number => {
+    const match = guestString.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 2;
+  };
+
   const onSubmit = async (data: BookingFormData) => {
-    setIsSubmitting(true);
+    try {
+      await createBooking.mutateAsync({
+        packageId: packageId || null,
+        packageName,
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        travelDate: data.travelDate,
+        guests: parseGuestCount(data.guests),
+        isResident: data.isResident,
+        message: data.message,
+      });
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+      setIsSubmitted(true);
+      toast.success('Request sent! We\'ll get back to you within 24 hours.');
 
-    // In production, you would send this to your backend
-    console.log('Booking request:', { ...data, package: packageName });
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast.success('Request sent! We\'ll get back to you within 24 hours.');
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      reset();
-    }, 3000);
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        reset();
+      }, 3000);
+    } catch (error) {
+      console.error('Booking error:', error);
+      toast.error('Failed to submit request. Please try again.');
+    }
   };
 
   const inputClass = (hasError: boolean) =>
@@ -115,6 +135,19 @@ const BookingForm = ({ packageName }: BookingFormProps) => {
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Resident Toggle */}
+        <div className="flex items-center justify-between p-4 bg-primary/5 rounded-xl border border-primary/20">
+          <label htmlFor="isResident" className="text-sm font-medium text-foreground">
+            I am a Kenyan Resident
+          </label>
+          <input
+            {...register('isResident')}
+            id="isResident"
+            type="checkbox"
+            className="w-5 h-5 rounded border-border text-primary focus:ring-primary"
+          />
+        </div>
+
         {/* Full Name */}
         <div>
           <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-2">
@@ -243,10 +276,10 @@ const BookingForm = ({ packageName }: BookingFormProps) => {
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={createBooking.isPending}
           className="btn-gold w-full flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? (
+          {createBooking.isPending ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
               Sending Request...

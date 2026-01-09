@@ -1,82 +1,52 @@
-import { ArrowRight, Star, Clock, MapPin } from 'lucide-react';
+import { ArrowRight, Star, Clock, MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { usePackages } from '@/hooks/usePackages';
+
+// Fallback images
 import maraImage from '@/assets/mara-lodge.jpg';
 import amboseliImage from '@/assets/amboseli.jpg';
 import dianiImage from '@/assets/diani-beach.jpg';
 import samburuImage from '@/assets/samburu.jpg';
 import naivashaImage from '@/assets/naivasha.jpg';
 
-interface Destination {
+// Map image paths to imported images
+const imageMap: Record<string, string> = {
+  '/src/assets/mara-lodge.jpg': maraImage,
+  '/src/assets/amboseli.jpg': amboseliImage,
+  '/src/assets/diani-beach.jpg': dianiImage,
+  '/src/assets/samburu.jpg': samburuImage,
+  '/src/assets/naivasha.jpg': naivashaImage,
+};
+
+const getImageSrc = (images: string[]): string => {
+  if (images.length === 0) return maraImage;
+  const firstImage = images[0];
+  return imageMap[firstImage] || firstImage;
+};
+
+interface DestinationCardProps {
   id: string;
+  slug: string;
   name: string;
   location: string;
   image: string;
   price: number;
   rating: number;
-  days: string;
+  duration: string;
   featured?: boolean;
 }
 
-const destinations: Destination[] = [
-  {
-    id: 'mara',
-    name: 'Maasai Mara',
-    location: 'Narok County',
-    image: maraImage,
-    price: 25000,
-    rating: 4.9,
-    days: '3-5 Days',
-    featured: true,
-  },
-  {
-    id: 'amboseli',
-    name: 'Amboseli',
-    location: 'Kajiado County',
-    image: amboseliImage,
-    price: 22000,
-    rating: 4.8,
-    days: '2-3 Days',
-  },
-  {
-    id: 'diani',
-    name: 'Diani Beach',
-    location: 'Kwale County',
-    image: dianiImage,
-    price: 18000,
-    rating: 4.7,
-    days: '4-7 Days',
-  },
-  {
-    id: 'samburu',
-    name: 'Samburu',
-    location: 'Samburu County',
-    image: samburuImage,
-    price: 28000,
-    rating: 4.8,
-    days: '3-4 Days',
-  },
-  {
-    id: 'naivasha',
-    name: 'Lake Naivasha',
-    location: 'Nakuru County',
-    image: naivashaImage,
-    price: 12000,
-    rating: 4.6,
-    days: '1-2 Days',
-  },
-];
-
-const DestinationCard = ({ destination }: { destination: Destination }) => {
+const DestinationCard = ({ slug, name, location, image, price, rating, duration, featured }: DestinationCardProps) => {
   return (
     <Link 
-      to={`/package/${destination.id}`}
-      className={`destination-card group block ${destination.featured ? 'md:col-span-2 md:row-span-2' : ''}`}
+      to={`/package/${slug}`}
+      className={`destination-card group block ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
-          src={destination.image}
-          alt={`${destination.name} safari destination`}
+          src={image}
+          alt={`${name} safari destination`}
           className="card-image w-full h-full object-cover"
         />
         
@@ -85,11 +55,11 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
         
         {/* Price Tag */}
         <div className="absolute top-4 right-4 price-tag">
-          From KES {destination.price.toLocaleString()}
+          From KES {price.toLocaleString()}
         </div>
 
         {/* Featured Badge */}
-        {destination.featured && (
+        {featured && (
           <div className="absolute top-4 left-4 bg-accent text-accent-foreground text-xs font-bold px-3 py-1.5 rounded-full">
             Most Popular
           </div>
@@ -99,22 +69,22 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
         <div className="absolute bottom-0 left-0 right-0 p-5">
           <div className="flex items-center gap-2 text-white/80 text-sm mb-2">
             <MapPin className="w-4 h-4" />
-            {destination.location}
+            {location}
           </div>
           
           <h3 className="font-display text-2xl font-bold text-white mb-3">
-            {destination.name}
+            {name}
           </h3>
           
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
                 <Star className="w-4 h-4 text-primary fill-primary" />
-                <span className="text-white font-medium">{destination.rating}</span>
+                <span className="text-white font-medium">{rating}</span>
               </div>
               <div className="flex items-center gap-1.5 text-white/70">
                 <Clock className="w-4 h-4" />
-                <span className="text-sm">{destination.days}</span>
+                <span className="text-sm">{duration}</span>
               </div>
             </div>
             
@@ -129,6 +99,36 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
 };
 
 const DestinationsSection = () => {
+  const { data: packages, isLoading, error } = usePackages();
+
+  if (isLoading) {
+    return (
+      <section id="destinations" className="py-20 lg:py-28 bg-background">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !packages || packages.length === 0) {
+    return (
+      <section id="destinations" className="py-20 lg:py-28 bg-background">
+        <div className="container mx-auto px-4 lg:px-8 text-center">
+          <p className="text-muted-foreground">No destinations available at the moment.</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Mark the first package as featured
+  const destinationsWithFeatured = packages.map((pkg, index) => ({
+    ...pkg,
+    featured: index === 0,
+  }));
+
   return (
     <section id="destinations" className="py-20 lg:py-28 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -152,8 +152,19 @@ const DestinationsSection = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map((destination) => (
-            <DestinationCard key={destination.id} destination={destination} />
+          {destinationsWithFeatured.map((pkg) => (
+            <DestinationCard
+              key={pkg.id}
+              id={pkg.id}
+              slug={pkg.slug}
+              name={pkg.name}
+              location={pkg.location}
+              image={getImageSrc(pkg.images)}
+              price={pkg.price_resident}
+              rating={pkg.rating || 4.8}
+              duration={pkg.duration}
+              featured={pkg.featured}
+            />
           ))}
         </div>
       </div>
