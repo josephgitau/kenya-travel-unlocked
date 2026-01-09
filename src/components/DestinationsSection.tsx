@@ -176,10 +176,14 @@ const DestinationsSection = () => {
             </p>
           </div>
           <a
-            href="#all-destinations"
+            href="#experiences"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('experiences')?.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
           >
-            View All Destinations
+            Explore Experiences
             <ArrowRight className="w-5 h-5" />
           </a>
         </div>

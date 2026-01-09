@@ -118,9 +118,16 @@ const ItinerarySection = () => {
               </div>
 
               {/* CTA */}
-              <button className="btn-gold w-full text-center">
+              <a 
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="btn-gold w-full text-center block"
+              >
                 Request Quote / Check Availability
-              </button>
+              </a>
               
               <p className="text-center text-sm text-muted-foreground mt-4">
                 No payment required now. Get a personalized quote.

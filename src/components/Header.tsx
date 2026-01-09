@@ -16,10 +16,19 @@ const Header = () => {
   const navLinks = [
     { label: 'Destinations', href: '#destinations' },
     { label: 'Experiences', href: '#experiences' },
-    { label: 'Safari Packages', href: '#packages' },
-    { label: 'About Us', href: '#about' },
+    { label: 'Itinerary', href: '#itinerary' },
     { label: 'Contact', href: '#contact' },
   ];
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const sectionId = href.replace('#', '');
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header
@@ -47,6 +56,7 @@ const Header = () => {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   isScrolled ? 'text-foreground' : 'text-white'
                 }`}
@@ -67,7 +77,11 @@ const Header = () => {
               <Phone className="w-4 h-4" />
               +254 700 000 000
             </a>
-            <a href="#booking" className="btn-gold text-sm py-3 px-6">
+            <a 
+              href="#contact" 
+              onClick={(e) => scrollToSection(e, '#contact')}
+              className="btn-gold text-sm py-3 px-6"
+            >
               Book Safari
             </a>
           </div>
@@ -89,12 +103,12 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 glass border-t border-border animate-fade-in-up">
             <nav className="flex flex-col p-4">
-              {navLinks.map((link) => (
+            {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
                   className="py-3 text-foreground font-medium hover:text-primary transition-colors border-b border-border/50"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => scrollToSection(e, link.href)}
                 >
                   {link.label}
                 </a>
@@ -106,7 +120,11 @@ const Header = () => {
                 <Phone className="w-4 h-4" />
                 +254 700 000 000
               </a>
-              <a href="#booking" className="btn-gold text-center mt-4 py-3">
+              <a 
+                href="#contact" 
+                onClick={(e) => scrollToSection(e, '#contact')}
+                className="btn-gold text-center mt-4 py-3"
+              >
                 Book Safari
               </a>
             </nav>
