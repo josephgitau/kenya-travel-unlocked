@@ -1,4 +1,5 @@
 import { ArrowRight, Star, Clock, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import maraImage from '@/assets/mara-lodge.jpg';
 import amboseliImage from '@/assets/amboseli.jpg';
 import dianiImage from '@/assets/diani-beach.jpg';
@@ -67,7 +68,10 @@ const destinations: Destination[] = [
 
 const DestinationCard = ({ destination }: { destination: Destination }) => {
   return (
-    <article className={`destination-card group ${destination.featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
+    <Link 
+      to={`/package/${destination.id}`}
+      className={`destination-card group block ${destination.featured ? 'md:col-span-2 md:row-span-2' : ''}`}
+    >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
@@ -114,13 +118,13 @@ const DestinationCard = ({ destination }: { destination: Destination }) => {
               </div>
             </div>
             
-            <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-primary">
+            <div className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-all duration-300 group-hover:bg-primary">
               <ArrowRight className="w-5 h-5 text-white" />
-            </button>
+            </div>
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 
