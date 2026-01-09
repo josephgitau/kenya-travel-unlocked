@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import { Users, Tent, Crown, UsersRound, User } from 'lucide-react';
+import { useFilters, ResidentType, BudgetType, TripType } from '@/contexts/FilterContext';
 
 const FilterBar = () => {
-  const [residentType, setResidentType] = useState<'resident' | 'non-resident'>('non-resident');
-  const [budgetType, setBudgetType] = useState<string>('mid-range');
-  const [tripType, setTripType] = useState<'group' | 'private'>('group');
+  const { residentType, setResidentType, budgetType, setBudgetType, tripType, setTripType } = useFilters();
 
-  const budgetOptions = [
+  const budgetOptions: { id: BudgetType; label: string; icon: typeof Tent }[] = [
     { id: 'budget', label: 'Budget', icon: Tent },
     { id: 'mid-range', label: 'Mid-Range', icon: Users },
     { id: 'luxury', label: 'Luxury', icon: Crown },

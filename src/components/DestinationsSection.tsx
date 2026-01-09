@@ -1,6 +1,7 @@
 import { ArrowRight, Star, Clock, MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { usePackages } from '@/hooks/usePackages';
+import { useFilters } from '@/contexts/FilterContext';
 
 // Fallback images
 import maraImage from '@/assets/mara-lodge.jpg';
@@ -34,9 +35,10 @@ interface DestinationCardProps {
   rating: number;
   duration: string;
   featured?: boolean;
+  isResident: boolean;
 }
 
-const DestinationCard = ({ slug, name, location, image, price, rating, duration, featured }: DestinationCardProps) => {
+const DestinationCard = ({ slug, name, location, image, price, rating, duration, featured, isResident }: DestinationCardProps) => {
   return (
     <Link 
       to={`/package/${slug}`}
@@ -55,7 +57,7 @@ const DestinationCard = ({ slug, name, location, image, price, rating, duration,
         
         {/* Price Tag */}
         <div className="absolute top-4 right-4 price-tag">
-          From KES {price.toLocaleString()}
+          {isResident ? `KES ${price.toLocaleString()}` : `$${price.toLocaleString()}`}
         </div>
 
         {/* Featured Badge */}
@@ -100,6 +102,22 @@ const DestinationCard = ({ slug, name, location, image, price, rating, duration,
 
 const DestinationsSection = () => {
   const { data: packages, isLoading, error } = usePackages();
+  const { residentType, budgetType } = useFilters();
+
+  const isResident = residentType === 'resident';
+
+  // Filter packages based on budget
+  const filteredPackages = packages?.filter((pkg) => {
+    const price = isResident ? pkg.price_resident : pkg.price_non_resident;
+    
+    if (budgetType === 'budget') {
+      return isResident ? price <= 30000 : price <= 400;
+    } else if (budgetType === 'luxury') {
+      return isResident ? price >= 50000 : price >= 600;
+    }
+    // mid-range
+    return isResident ? (price > 30000 && price < 50000) : (price > 400 && price < 600);
+  });
 
   if (isLoading) {
     return (
@@ -123,8 +141,11 @@ const DestinationsSection = () => {
     );
   }
 
+  // Use filtered packages or show all if no matches
+  const displayPackages = filteredPackages && filteredPackages.length > 0 ? filteredPackages : packages;
+
   // Mark the first package as featured
-  const destinationsWithFeatured = packages.map((pkg, index) => ({
+  const destinationsWithFeatured = displayPackages.map((pkg, index) => ({
     ...pkg,
     featured: index === 0,
   }));
@@ -160,10 +181,11 @@ const DestinationsSection = () => {
               name={pkg.name}
               location={pkg.location}
               image={getImageSrc(pkg.images)}
-              price={pkg.price_resident}
+              price={isResident ? pkg.price_resident : pkg.price_non_resident}
               rating={pkg.rating || 4.8}
               duration={pkg.duration}
               featured={pkg.featured}
+              isResident={isResident}
             />
           ))}
         </div>
