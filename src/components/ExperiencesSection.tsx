@@ -56,10 +56,21 @@ const experiences: Experience[] = [
 const ExperienceCard = ({ experience, index }: { experience: Experience; index: number }) => {
   const Icon = experience.icon;
   
+  const handleClick = () => {
+    const destinationsSection = document.getElementById('destinations');
+    if (destinationsSection) {
+      destinationsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
   return (
     <article 
-      className="experience-card group min-h-[320px] lg:min-h-[400px]"
+      className="experience-card group min-h-[320px] lg:min-h-[400px] cursor-pointer"
       style={{ animationDelay: `${index * 0.1}s` }}
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
       {/* Background Image */}
       <div
