@@ -1,87 +1,195 @@
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube, Shield, Award, CreditCard } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToSection = (href: string) => {
+    const sectionId = href.replace('#', '');
+    if (location.pathname === '/') {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate('/' + href);
+    }
+  };
+
+  const safariPackages = [
+    { label: 'Maasai Mara Safari Adventure', href: '/package/maasai-mara' },
+    { label: 'Amboseli Elephant Paradise', href: '/package/amboseli' },
+    { label: 'Samburu Wilderness Experience', href: '/package/samburu' },
+    { label: 'Diani Beach Coastal Escape', href: '/package/diani-beach' },
+    { label: 'Lake Naivasha Weekend Getaway', href: '/package/lake-naivasha' },
+  ];
+
+  const experiences = [
+    { label: 'Bush Safaris', href: '/experience/bush' },
+    { label: 'Beach Holidays', href: '/experience/beach' },
+    { label: 'Adrenaline Adventures', href: '/experience/adrenaline' },
+    { label: 'Staycation Escapes', href: '/experience/staycation' },
+  ];
 
   const quickLinks = [
-    { label: 'Maasai Mara Safaris', href: '#' },
-    { label: 'Beach Holidays', href: '#' },
-    { label: 'Day Trips', href: '#' },
-    { label: 'Group Tours', href: '#' },
-    { label: 'Custom Packages', href: '#' },
+    { label: 'Home', href: '/', isRoute: true },
+    { label: 'Destinations', href: '#destinations', isRoute: false },
+    { label: 'Experiences', href: '#experiences', isRoute: false },
+    { label: 'Sample Itinerary', href: '#itinerary', isRoute: false },
+    { label: 'Contact Us', href: '#contact', isRoute: false },
   ];
 
-  const destinations = [
-    { label: 'Maasai Mara', href: '#' },
-    { label: 'Amboseli', href: '#' },
-    { label: 'Samburu', href: '#' },
-    { label: 'Diani Beach', href: '#' },
-    { label: 'Lake Nakuru', href: '#' },
-  ];
-
-  const company = [
-    { label: 'About Us', href: '#' },
-    { label: 'Our Team', href: '#' },
-    { label: 'Reviews', href: '#' },
-    { label: 'Blog', href: '#' },
-    { label: 'Contact', href: '#' },
+  const legalLinks = [
+    { label: 'Terms & Conditions', href: '#' },
+    { label: 'Privacy Policy', href: '#' },
+    { label: 'Cancellation Policy', href: '#' },
   ];
 
   return (
-    <footer id="contact" className="bg-earth text-white">
+    <footer className="bg-earth text-white">
+      {/* Newsletter Section */}
+      <div className="border-b border-white/10">
+        <div className="container mx-auto px-4 lg:px-8 py-10 lg:py-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="text-center lg:text-left">
+              <h3 className="font-display text-xl lg:text-2xl font-bold mb-2">Get Safari Deals & Travel Tips</h3>
+              <p className="text-white/70 text-sm lg:text-base">Subscribe for exclusive offers and Kenya travel inspiration</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto max-w-md">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 outline-none focus:border-primary transition-colors"
+              />
+              <button className="btn-gold py-3 px-6 rounded-full whitespace-nowrap">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Footer */}
-      <div className="container mx-auto px-4 lg:px-8 py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <a href="/" className="flex items-center gap-2 mb-6">
+          <div className="sm:col-span-2 lg:col-span-2">
+            <Link to="/" className="flex items-center gap-2 mb-5">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-display font-bold text-xl">A</span>
               </div>
               <span className="font-display text-2xl font-bold text-white">
                 Awili<span className="text-primary">Safaris</span>
               </span>
-            </a>
-            <p className="text-white/70 mb-6">
-              Your trusted partner for unforgettable Kenyan adventures. From bush to beach, we create memories that last a lifetime.
+            </Link>
+            <p className="text-white/70 mb-5 leading-relaxed max-w-sm">
+              Your trusted partner for unforgettable Kenyan adventures. From the rolling plains of the Mara to the pristine beaches of Diani, we create memories that last a lifetime.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors">
+            
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium">TRA Licensed</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2">
+                <Award className="w-4 h-4 text-primary" />
+                <span className="text-xs font-medium">KATO Member</span>
+              </div>
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex gap-3">
+              <a 
+                href="https://facebook.com/awilisafaris" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1877F2] flex items-center justify-center transition-colors"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors">
+              <a 
+                href="https://instagram.com/awilisafaris" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Follow us on Instagram"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#E4405F] flex items-center justify-center transition-colors"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors">
+              <a 
+                href="https://twitter.com/awilisafaris" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Follow us on Twitter"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1DA1F2] flex items-center justify-center transition-colors"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors">
+              <a 
+                href="https://youtube.com/@awilisafaris" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Subscribe on YouTube"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#FF0000] flex items-center justify-center transition-colors"
+              >
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Safari Packages */}
           <div>
-            <h4 className="font-display text-lg font-bold mb-6">Safari Packages</h4>
+            <h4 className="font-display text-lg font-bold mb-5">Safari Packages</h4>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
+              {safariPackages.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-white/70 hover:text-primary transition-colors">
+                  <Link 
+                    to={link.href} 
+                    className="text-sm text-white/70 hover:text-primary transition-colors"
+                  >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Destinations */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-display text-lg font-bold mb-6">Destinations</h4>
+            <h4 className="font-display text-lg font-bold mb-5">Quick Links</h4>
             <ul className="space-y-3">
-              {destinations.map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-white/70 hover:text-primary transition-colors">
+                  {link.isRoute ? (
+                    <Link 
+                      to={link.href} 
+                      className="text-sm text-white/70 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <button 
+                      onClick={() => scrollToSection(link.href)}
+                      className="text-sm text-white/70 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  )}
+                </li>
+              ))}
+              <li className="pt-2 border-t border-white/10 mt-3">
+                <span className="text-xs text-white/40 uppercase tracking-wider">Legal</span>
+              </li>
+              {legalLinks.map((link) => (
+                <li key={link.label}>
+                  <a 
+                    href={link.href} 
+                    className="text-sm text-white/70 hover:text-primary transition-colors"
+                  >
                     {link.label}
                   </a>
                 </li>
@@ -91,29 +199,48 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-display text-lg font-bold mb-6">Contact Us</h4>
+            <h4 className="font-display text-lg font-bold mb-5">Contact Us</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-white/70">
-                  Westlands Business Center, Nairobi, Kenya
-                </span>
+                <div>
+                  <p className="text-white/70 text-sm">
+                    Awili Safaris Office,<br />
+                    Westlands Business Center,<br />
+                    Waiyaki Way, Nairobi, Kenya
+                  </p>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <a href="tel:+254700000000" className="text-white/70 hover:text-primary transition-colors">
-                  +254 700 000 000
-                </a>
+                <div>
+                  <a href="tel:+254712345678" className="text-white/70 hover:text-primary transition-colors text-sm block">
+                    +254 712 345 678
+                  </a>
+                  <a href="tel:+254798765432" className="text-white/70 hover:text-primary transition-colors text-sm block">
+                    +254 798 765 432
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <a href="mailto:info@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors">
-                  info@awilisafaris.co.ke
-                </a>
+                <div>
+                  <a href="mailto:info@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors text-sm block">
+                    info@awilisafaris.co.ke
+                  </a>
+                  <a href="mailto:bookings@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors text-sm block">
+                    bookings@awilisafaris.co.ke
+                  </a>
+                </div>
               </li>
-              <li className="flex items-center gap-3">
-                <Clock className="w-5 h-5 text-primary shrink-0" />
-                <span className="text-white/70">Mon - Sat: 8AM - 6PM</span>
+              <li className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                <div className="text-sm text-white/70">
+                  <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
+                  <p>Saturday: 9:00 AM - 4:00 PM</p>
+                  <p>Sunday: Closed</p>
+                  <p className="text-xs text-white/50 mt-1">(24/7 Emergency support for active tours)</p>
+                </div>
               </li>
             </ul>
           </div>
@@ -124,28 +251,24 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            {/* Certifications */}
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              <div className="flex items-center gap-2 text-sm text-white/60">
-                <div className="w-8 h-8 rounded bg-white/10 flex items-center justify-center text-xs font-bold">
-                  TRA
-                </div>
-                <span>Licensed by TRA</span>
-              </div>
-              <div className="h-4 w-px bg-white/20" />
-              <div className="flex items-center gap-3">
+            {/* Payment Methods */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <div className="flex items-center gap-2">
+                <CreditCard className="w-4 h-4 text-white/60" />
                 <span className="text-sm text-white/60">We accept:</span>
-                <div className="flex items-center gap-2">
-                  <div className="bg-white/10 px-2 py-1 rounded text-xs font-bold">M-Pesa</div>
-                  <div className="bg-white/10 px-2 py-1 rounded text-xs font-bold">VISA</div>
-                  <div className="bg-white/10 px-2 py-1 rounded text-xs font-bold">MasterCard</div>
-                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="bg-[#00A884] px-3 py-1.5 rounded text-xs font-bold text-white">M-Pesa</div>
+                <div className="bg-[#1A1F71] px-3 py-1.5 rounded text-xs font-bold text-white">VISA</div>
+                <div className="bg-[#EB001B] px-3 py-1.5 rounded text-xs font-bold text-white">MasterCard</div>
+                <div className="bg-white/90 px-3 py-1.5 rounded text-xs font-bold text-gray-800">PayPal</div>
               </div>
             </div>
 
             {/* Copyright */}
             <div className="text-sm text-white/60 text-center lg:text-right">
-              © {currentYear} Awili Safaris. All rights reserved.
+              <p>© {currentYear} Awili Safaris. All rights reserved.</p>
+              <p className="text-xs text-white/40 mt-1">TRA License No: TRA/2024/XXXX | KATO Member ID: XXXX</p>
             </div>
           </div>
         </div>
