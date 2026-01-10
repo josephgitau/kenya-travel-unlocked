@@ -15,6 +15,11 @@ import Admin from "./pages/Admin";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Cancellation from "./pages/Cancellation";
+import WildlifeCalendar from "./pages/WildlifeCalendar";
+import SafariQuiz from "./pages/SafariQuiz";
+import InstantQuote from "./pages/InstantQuote";
+import Destinations from "./pages/Destinations";
+import DestinationGuide from "./pages/DestinationGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +43,11 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/cancellation" element={<Cancellation />} />
+              <Route path="/calendar" element={<WildlifeCalendar />} />
+              <Route path="/quiz" element={<SafariQuiz />} />
+              <Route path="/quote" element={<InstantQuote />} />
+              <Route path="/destinations" element={<Destinations />} />
+              <Route path="/destination/:destinationSlug" element={<DestinationGuide />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
