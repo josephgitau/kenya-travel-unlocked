@@ -42,9 +42,9 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { label: 'Terms & Conditions', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Cancellation Policy', href: '#' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Cancellation Policy', href: '/cancellation' },
   ];
 
   return (
@@ -186,12 +186,12 @@ const Footer = () => {
               </li>
               {legalLinks.map((link) => (
                 <li key={link.label}>
-                  <a 
-                    href={link.href} 
+                  <Link 
+                    to={link.href} 
                     className="text-sm text-white/70 hover:text-primary transition-colors"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
