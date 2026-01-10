@@ -17,6 +17,29 @@ import maraMigration from '@/assets/mara-migration.jpg';
 import maraGameDrive from '@/assets/mara-game-drive.jpg';
 import maraBalloon from '@/assets/mara-balloon.jpg';
 
+// Amboseli images
+import amboseli from '@/assets/amboseli.jpg';
+import amboseliElephants from '@/assets/amboseli-elephants.jpg';
+import amboseliLodge from '@/assets/amboseli-lodge.jpg';
+
+// Diani Beach images
+import dianiBeach from '@/assets/diani-beach.jpg';
+import dianiOcean from '@/assets/diani-ocean.jpg';
+import dianiResort from '@/assets/diani-resort.jpg';
+import dianiSnorkeling from '@/assets/diani-snorkeling.jpg';
+
+// Lake Naivasha images
+import naivasha from '@/assets/naivasha.jpg';
+import naivashaHippos from '@/assets/naivasha-hippos.jpg';
+import naivashaBoat from '@/assets/naivasha-boat.jpg';
+import naivashaWildlife from '@/assets/naivasha-wildlife.jpg';
+
+// Samburu images
+import samburu from '@/assets/samburu.jpg';
+import samburuWildlife from '@/assets/samburu-wildlife.jpg';
+import samburuRiver from '@/assets/samburu-river.jpg';
+import samburuCulture from '@/assets/samburu-culture.jpg';
+
 // Map image paths to imported images
 const imageMap: Record<string, string> = {
   '/src/assets/hero-safari.jpg': heroImage,
@@ -25,6 +48,25 @@ const imageMap: Record<string, string> = {
   '/src/assets/mara-migration.jpg': maraMigration,
   '/src/assets/mara-game-drive.jpg': maraGameDrive,
   '/src/assets/mara-balloon.jpg': maraBalloon,
+  // Amboseli
+  '/src/assets/amboseli.jpg': amboseli,
+  '/src/assets/amboseli-elephants.jpg': amboseliElephants,
+  '/src/assets/amboseli-lodge.jpg': amboseliLodge,
+  // Diani Beach
+  '/src/assets/diani-beach.jpg': dianiBeach,
+  '/src/assets/diani-ocean.jpg': dianiOcean,
+  '/src/assets/diani-resort.jpg': dianiResort,
+  '/src/assets/diani-snorkeling.jpg': dianiSnorkeling,
+  // Lake Naivasha
+  '/src/assets/naivasha.jpg': naivasha,
+  '/src/assets/naivasha-hippos.jpg': naivashaHippos,
+  '/src/assets/naivasha-boat.jpg': naivashaBoat,
+  '/src/assets/naivasha-wildlife.jpg': naivashaWildlife,
+  // Samburu
+  '/src/assets/samburu.jpg': samburu,
+  '/src/assets/samburu-wildlife.jpg': samburuWildlife,
+  '/src/assets/samburu-river.jpg': samburuRiver,
+  '/src/assets/samburu-culture.jpg': samburuCulture,
 };
 
 const getImageSrc = (path: string): string => {
