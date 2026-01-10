@@ -120,9 +120,12 @@ const DestinationsSection = () => {
       pkg.description.toLowerCase().includes(searchLower) ||
       pkg.category?.toLowerCase().includes(searchLower);
 
-    if (!matchesSearch) return false;
+    // If there's an active search, prioritize search results and skip budget filter
+    if (searchLower) {
+      return matchesSearch;
+    }
     
-    // Budget filter
+    // Budget filter only applies when not searching
     if (budgetType === 'budget') {
       return isResident ? price <= 30000 : price <= 400;
     } else if (budgetType === 'luxury') {
