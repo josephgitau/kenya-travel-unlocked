@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-import FilterBar from '@/components/FilterBar';
-import DestinationsSection from '@/components/DestinationsSection';
-import ExperiencesSection from '@/components/ExperiencesSection';
-import ItinerarySection from '@/components/ItinerarySection';
+import HowWeWork from '@/components/HowWeWork';
+import FeaturedExperiences from '@/components/FeaturedExperiences';
+import PopularPackages from '@/components/PopularPackages';
+import WhyChooseUs from '@/components/WhyChooseUs';
+import PlanYourTrip from '@/components/PlanYourTrip';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -29,16 +30,18 @@ const Index = () => {
       }, 100);
     }
   }, [location.hash]);
+  
   return (
     <div className="min-h-screen bg-background scroll-smooth">
       <SEO jsonLd={createOrganizationSchema()} />
       <Header />
       <main>
         <HeroSection />
-        <FilterBar />
-        <DestinationsSection />
-        <ExperiencesSection />
-        <ItinerarySection />
+        <HowWeWork />
+        <FeaturedExperiences />
+        <PopularPackages />
+        <WhyChooseUs />
+        <PlanYourTrip />
         <ContactSection />
       </main>
       <Footer />
