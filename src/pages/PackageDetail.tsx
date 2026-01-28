@@ -7,7 +7,7 @@ import PhotoGallery from '@/components/PhotoGallery';
 import PricingCalculator from '@/components/PricingCalculator';
 import BookingForm from '@/components/BookingForm';
 import ReviewsSection from '@/components/ReviewsSection';
-import PageBreadcrumb from '@/components/PageBreadcrumb';
+import JourneyBreadcrumb from '@/components/JourneyBreadcrumb';
 import SEO, { createPackageSchema } from '@/components/SEO';
 import { Skeleton } from '@/components/ui/skeleton';
 import { usePackage } from '@/hooks/usePackages';
@@ -182,17 +182,14 @@ const PackageDetail = () => {
       />
       <Header />
       
-      {/* Breadcrumb */}
-      <div className="bg-muted/50 border-b border-border">
-        <div className="container mx-auto px-4 lg:px-8 py-3">
-          <PageBreadcrumb 
-            items={[
-              { label: 'Destinations', href: '/#destinations' },
-              { label: pkg.name }
-            ]} 
-          />
-        </div>
-      </div>
+      {/* Journey Breadcrumb */}
+      <JourneyBreadcrumb 
+        items={[
+          { label: 'Packages', href: '/#destinations' },
+          { label: pkg.location, href: `/destination/${pkg.location.toLowerCase().replace(/\s+/g, '-')}` },
+          { label: pkg.name }
+        ]} 
+      />
       
       {/* Hero Section */}
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">

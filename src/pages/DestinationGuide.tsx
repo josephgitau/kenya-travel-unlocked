@@ -3,7 +3,8 @@ import { ArrowLeft, MapPin, Clock, Star, Users, Sun, CloudRain, Camera, Binocula
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import PageBreadcrumb from '@/components/PageBreadcrumb';
+import JourneyBreadcrumb from '@/components/JourneyBreadcrumb';
+import { destinationPreviews } from '@/data/destinations';
 import SEO from '@/components/SEO';
 import { usePackages } from '@/hooks/usePackages';
 import { destinationsData } from '@/data/destinations';
@@ -71,16 +72,18 @@ const DestinationGuide = () => {
       />
       <Header />
 
-      <div className="bg-muted/50 border-b border-border">
-        <div className="container mx-auto px-4 lg:px-8 py-3">
-          <PageBreadcrumb 
-            items={[
-              { label: 'Destinations', href: '/destinations' },
-              { label: destination.name }
-            ]} 
-          />
-        </div>
-      </div>
+      {/* Journey Breadcrumb with sibling destinations */}
+      <JourneyBreadcrumb 
+        items={[
+          { label: 'Destinations', href: '/destinations' },
+          { label: destination.name }
+        ]}
+        siblings={destinationPreviews
+          .filter(d => d.slug !== destinationSlug)
+          .slice(0, 4)
+          .map(d => ({ label: d.name, href: `/destination/${d.slug}` }))
+        }
+      />
 
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${destination.heroImage})` }} />
