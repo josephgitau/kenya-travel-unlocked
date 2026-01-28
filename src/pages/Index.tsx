@@ -9,6 +9,8 @@ import ItinerarySection from '@/components/ItinerarySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import BackToTopButton from '@/components/BackToTopButton';
+import CookieConsent from '@/components/CookieConsent';
 import SEO, { createOrganizationSchema } from '@/components/SEO';
 
 const Index = () => {
@@ -41,6 +43,8 @@ const Index = () => {
       </main>
       <Footer />
       <WhatsAppButton />
+      <BackToTopButton />
+      <CookieConsent />
     </div>
   );
 };

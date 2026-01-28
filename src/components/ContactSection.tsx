@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 
 const contactSchema = z.object({
@@ -57,21 +58,40 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission - in production, connect to email service or database
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const { error } = await supabase
+        .from('contact_inquiries')
+        .insert({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone?.trim() || null,
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: 'Message Sent!',
-      description: 'Thank you for contacting us. We\'ll get back to you within 24 hours.',
-    });
+      if (error) throw error;
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 3000);
+      setIsSubmitted(true);
+      toast({
+        title: 'Message Sent!',
+        description: 'Thank you for contacting us. We\'ll get back to you within 24 hours.',
+      });
+
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      }, 3000);
+    } catch (error) {
+      console.error('Contact form submission error:', error);
+      toast({
+        title: 'Submission failed',
+        description: 'Please try again later or contact us directly via phone.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [

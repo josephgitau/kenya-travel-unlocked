@@ -1,10 +1,19 @@
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube, Shield, Award, CreditCard, Calendar, HelpCircle, Calculator } from 'lucide-react';
+import { useState } from 'react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube, Shield, Award, CreditCard, Calendar, HelpCircle, Calculator, Loader2 } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { z } from 'zod';
+
+const emailSchema = z.string().trim().email('Please enter a valid email address').max(255);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const scrollToSection = (href: string) => {
     const sectionId = href.replace('#', '');
@@ -15,6 +24,54 @@ const Footer = () => {
       }
     } else {
       navigate('/' + href);
+    }
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const result = emailSchema.safeParse(email);
+    if (!result.success) {
+      toast({
+        title: 'Invalid email',
+        description: result.error.errors[0].message,
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email: email.trim() });
+
+      if (error) {
+        if (error.code === '23505') { // Unique violation
+          toast({
+            title: 'Already subscribed',
+            description: 'This email is already on our mailing list!',
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({
+          title: 'Successfully subscribed!',
+          description: 'Thank you for joining our safari community.',
+        });
+        setEmail('');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: 'Subscription failed',
+        description: 'Please try again later.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -57,16 +114,30 @@ const Footer = () => {
               <h3 className="font-display text-xl lg:text-2xl font-bold mb-2">Get Safari Deals & Travel Tips</h3>
               <p className="text-white/70 text-sm lg:text-base">Subscribe for exclusive offers and Kenya travel inspiration</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto max-w-md">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto max-w-md">
               <input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 px-4 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 outline-none focus:border-primary transition-colors"
+                disabled={isSubmitting}
               />
-              <button className="btn-gold py-3 px-6 rounded-full whitespace-nowrap">
-                Subscribe
+              <button 
+                type="submit" 
+                className="btn-gold py-3 px-6 rounded-full whitespace-nowrap disabled:opacity-50 flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  'Subscribe'
+                )}
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -67,14 +67,53 @@ export const useApproveReview = () => {
   });
 };
 
+// Contact Inquiries hooks
+export const useContactInquiries = () => {
+  return useQuery({
+    queryKey: ['admin-inquiries'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('contact_inquiries')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+};
+
+export const useUpdateInquiryStatus = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const { error } = await supabase
+        .from('contact_inquiries')
+        .update({ 
+          status, 
+          responded_at: status === 'responded' ? new Date().toISOString() : null 
+        })
+        .eq('id', id);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-inquiries'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-stats'] });
+    },
+  });
+};
+
 export const useAdminStats = () => {
   return useQuery({
     queryKey: ['admin-stats'],
     queryFn: async () => {
-      const [bookingsRes, packagesRes, reviewsRes] = await Promise.all([
+      const [bookingsRes, packagesRes, reviewsRes, inquiriesRes] = await Promise.all([
         supabase.from('bookings').select('id, status, total_price'),
         supabase.from('packages').select('id', { count: 'exact' }),
         supabase.from('reviews').select('id, is_approved'),
+        supabase.from('contact_inquiries').select('id, status'),
       ]);
 
       const bookings = bookingsRes.data || [];
@@ -87,6 +126,9 @@ export const useAdminStats = () => {
       const reviews = reviewsRes.data || [];
       const pendingReviews = reviews.filter(r => !r.is_approved).length;
 
+      const inquiries = inquiriesRes.data || [];
+      const pendingInquiries = inquiries.filter(i => i.status === 'pending').length;
+
       return {
         totalBookings: bookings.length,
         pendingBookings,
@@ -94,6 +136,8 @@ export const useAdminStats = () => {
         totalRevenue,
         totalPackages: packagesRes.count || 0,
         pendingReviews,
+        totalInquiries: inquiries.length,
+        pendingInquiries,
       };
     },
   });

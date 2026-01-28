@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { useBookings, useUpdateBookingStatus, useAdminStats, useReviews, useApproveReview } from '@/hooks/useAdmin';
+import { useBookings, useUpdateBookingStatus, useAdminStats, useReviews, useApproveReview, useContactInquiries, useUpdateInquiryStatus } from '@/hooks/useAdmin';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2, Package, Calendar, Users, DollarSign, LogOut, Home, Star, MessageSquare } from 'lucide-react';
+import { Loader2, Package, Calendar, Users, DollarSign, LogOut, Home, Star, MessageSquare, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -16,8 +16,10 @@ const Admin = () => {
   const { data: bookings, isLoading: bookingsLoading } = useBookings();
   const { data: stats, isLoading: statsLoading } = useAdminStats();
   const { data: reviews, isLoading: reviewsLoading } = useReviews();
+  const { data: inquiries, isLoading: inquiriesLoading } = useContactInquiries();
   const updateStatus = useUpdateBookingStatus();
   const approveReview = useApproveReview();
+  const updateInquiryStatus = useUpdateInquiryStatus();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('overview');
@@ -60,6 +62,22 @@ const Admin = () => {
     }
   };
 
+  const handleInquiryStatusChange = async (id: string, status: string) => {
+    try {
+      await updateInquiryStatus.mutateAsync({ id, status });
+      toast({
+        title: 'Inquiry updated',
+        description: `Inquiry marked as ${status}`,
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to update inquiry',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -75,14 +93,34 @@ const Admin = () => {
 
   if (!user) return null;
 
+  // Show access denied for non-admin users
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-display font-bold text-foreground mb-4">Access Denied</h1>
+          <p className="text-muted-foreground mb-6">You don't have permission to access the admin dashboard.</p>
+          <Link to="/">
+            <Button className="btn-gold">
+              <Home className="h-4 w-4 mr-2" />
+              Return Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const statusColors: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-800',
     confirmed: 'bg-green-100 text-green-800',
     cancelled: 'bg-red-100 text-red-800',
     completed: 'bg-blue-100 text-blue-800',
+    responded: 'bg-green-100 text-green-800',
   };
 
   const pendingReviews = reviews?.filter(r => !r.is_approved) || [];
+  const pendingInquiries = inquiries?.filter(i => i.status === 'pending') || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -110,7 +148,7 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <div className="bg-card rounded-xl p-6 shadow-card">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-primary/10 rounded-full">
@@ -149,6 +187,18 @@ const Admin = () => {
 
           <div className="bg-card rounded-xl p-6 shadow-card">
             <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-100 rounded-full">
+                <Mail className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Inquiries</p>
+                <p className="text-2xl font-bold text-foreground">{stats?.pendingInquiries || 0}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-card rounded-xl p-6 shadow-card">
+            <div className="flex items-center gap-4">
               <div className="p-3 bg-secondary/10 rounded-full">
                 <DollarSign className="h-6 w-6 text-secondary" />
               </div>
@@ -172,6 +222,15 @@ const Admin = () => {
             <TabsTrigger value="packages" className="gap-2">
               <Package className="h-4 w-4" />
               Packages
+            </TabsTrigger>
+            <TabsTrigger value="inquiries" className="gap-2">
+              <Mail className="h-4 w-4" />
+              Inquiries
+              {pendingInquiries.length > 0 && (
+                <Badge variant="destructive" className="ml-1 h-5 w-5 p-0 text-xs flex items-center justify-center">
+                  {pendingInquiries.length}
+                </Badge>
+              )}
             </TabsTrigger>
             <TabsTrigger value="reviews" className="gap-2">
               <MessageSquare className="h-4 w-4" />
@@ -292,6 +351,70 @@ const Admin = () => {
           {/* Packages Tab */}
           <TabsContent value="packages">
             <PackageManagement />
+          </TabsContent>
+
+          {/* Inquiries Tab */}
+          <TabsContent value="inquiries">
+            <div className="bg-card rounded-xl shadow-card overflow-hidden">
+              <div className="p-6 border-b border-border">
+                <h2 className="text-xl font-display font-bold text-foreground">Contact Inquiries</h2>
+              </div>
+
+              <div className="divide-y divide-border">
+                {inquiries?.map((inquiry) => (
+                  <div key={inquiry.id} className="p-6 hover:bg-muted/50">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <p className="font-medium text-foreground">{inquiry.name}</p>
+                          <span className="text-sm text-muted-foreground">{inquiry.email}</span>
+                          {inquiry.phone && (
+                            <span className="text-sm text-muted-foreground">{inquiry.phone}</span>
+                          )}
+                          <Badge className={statusColors[inquiry.status || 'pending']}>
+                            {inquiry.status || 'pending'}
+                          </Badge>
+                        </div>
+                        {inquiry.subject && (
+                          <p className="font-medium text-foreground mb-1">{inquiry.subject}</p>
+                        )}
+                        <p className="text-muted-foreground">{inquiry.message}</p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {format(new Date(inquiry.created_at || ''), 'MMM dd, yyyy HH:mm')}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        {inquiry.status === 'pending' && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-green-600 hover:bg-green-50"
+                            onClick={() => handleInquiryStatusChange(inquiry.id, 'responded')}
+                          >
+                            Mark Responded
+                          </Button>
+                        )}
+                        {inquiry.status === 'responded' && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-yellow-600 hover:bg-yellow-50"
+                            onClick={() => handleInquiryStatusChange(inquiry.id, 'pending')}
+                          >
+                            Reopen
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {(!inquiries || inquiries.length === 0) && (
+                  <div className="px-6 py-12 text-center text-muted-foreground">
+                    No contact inquiries yet
+                  </div>
+                )}
+              </div>
+            </div>
           </TabsContent>
 
           {/* Reviews Tab */}
