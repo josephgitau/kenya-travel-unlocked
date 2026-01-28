@@ -1,8 +1,9 @@
-import { ArrowRight, Star, Clock, MapPin, Loader2, Search, X } from 'lucide-react';
+import { ArrowRight, Star, Clock, MapPin, Search, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { usePackages } from '@/hooks/usePackages';
 import { useFilters } from '@/contexts/FilterContext';
 import { useSearch } from '@/contexts/SearchContext';
+import { SkeletonCardGrid } from '@/components/SkeletonCard';
 
 // Fallback images
 import maraImage from '@/assets/mara-lodge.jpg';
@@ -139,8 +140,19 @@ const DestinationsSection = () => {
     return (
       <section id="destinations" className="py-20 lg:py-28 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+            <div>
+              <span className="text-primary font-semibold uppercase tracking-wider text-sm">Destinations</span>
+              <h2 className="section-title mt-2">Explore Kenya's Finest</h2>
+              <p className="section-subtitle mt-4">
+                From the iconic Maasai Mara to the pristine shores of Diani, discover unforgettable destinations.
+              </p>
+            </div>
+          </div>
+          {/* Skeleton Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <SkeletonCardGrid count={6} variant="destination" />
           </div>
         </div>
       </section>

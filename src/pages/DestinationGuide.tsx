@@ -3,6 +3,8 @@ import { ArrowLeft, MapPin, Clock, Star, Users, Sun, CloudRain, Camera, Binocula
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEO from '@/components/SEO';
 import { usePackages } from '@/hooks/usePackages';
 
 // Import images
@@ -373,7 +375,24 @@ const DestinationGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title={`${destination.name} Safari Guide | Awili Safaris`}
+        description={destination.description.substring(0, 160)}
+        keywords={`${destination.name} safari, ${destination.name} Kenya, ${destination.name} wildlife, Kenya safari destination`}
+      />
       <Header />
+
+      {/* Breadcrumb */}
+      <div className="bg-muted/50 border-b border-border">
+        <div className="container mx-auto px-4 lg:px-8 py-3">
+          <PageBreadcrumb 
+            items={[
+              { label: 'Destinations', href: '/destinations' },
+              { label: destination.name }
+            ]} 
+          />
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
@@ -384,14 +403,6 @@ const DestinationGuide = () => {
         <div className="absolute inset-0 hero-overlay" />
 
         <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex flex-col justify-end pb-12 lg:pb-16">
-          <Link
-            to="/"
-            className="absolute top-24 left-4 lg:left-8 flex items-center gap-2 text-white/80 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Home
-          </Link>
-
           <div className="max-w-3xl">
             <span className="inline-block bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full mb-4">
               Destination Guide

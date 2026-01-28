@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEO from '@/components/SEO';
 import { usePackages } from '@/hooks/usePackages';
 
 interface QuizOption {
@@ -163,6 +165,10 @@ const SafariQuiz = () => {
 
     return (
       <div className="min-h-screen bg-background">
+        <SEO 
+          title="Your Safari Matches | Awili Safaris Quiz Results"
+          description="Based on your preferences, we've found the ideal Kenya safari experiences for you."
+        />
         <Header />
 
         <section className="py-20 lg:py-28">
@@ -249,6 +255,11 @@ const SafariQuiz = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Safari Quiz - Find Your Perfect Kenya Safari | Awili Safaris"
+        description="Take our quick quiz to discover your ideal Kenya safari destination. Match your travel style, interests, and budget to the perfect safari package."
+        keywords="safari quiz, Kenya safari match, find safari, safari planner, personalized safari"
+      />
       <Header />
 
       {/* Progress Bar */}
@@ -260,10 +271,12 @@ const SafariQuiz = () => {
           />
         </div>
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span>Question {currentQuestion + 1} of {quizQuestions.length}</span>
-            <span>{Math.round(progress)}% Complete</span>
-          </div>
+          <PageBreadcrumb 
+            items={[
+              { label: 'Plan Your Trip', href: '/' },
+              { label: 'Safari Quiz' }
+            ]} 
+          />
         </div>
       </div>
 
