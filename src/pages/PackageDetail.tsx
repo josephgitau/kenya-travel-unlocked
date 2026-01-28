@@ -7,8 +7,10 @@ import PhotoGallery from '@/components/PhotoGallery';
 import PricingCalculator from '@/components/PricingCalculator';
 import BookingForm from '@/components/BookingForm';
 import ReviewsSection from '@/components/ReviewsSection';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEO, { createPackageSchema } from '@/components/SEO';
+import { Skeleton } from '@/components/ui/skeleton';
 import { usePackage } from '@/hooks/usePackages';
-
 // Fallback images
 import heroImage from '@/assets/hero-safari.jpg';
 import maraLodge from '@/assets/mara-lodge.jpg';
@@ -89,11 +91,42 @@ const PackageDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading package details...</p>
-        </div>
+      <div className="min-h-screen bg-background">
+        <Header />
+        {/* Skeleton Hero */}
+        <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
+          <Skeleton className="absolute inset-0" />
+          <div className="absolute inset-0 hero-overlay" />
+          <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex flex-col justify-end pb-12 lg:pb-16">
+            <div className="max-w-3xl space-y-4">
+              <Skeleton className="h-8 w-24 rounded-full" />
+              <Skeleton className="h-12 w-96" />
+              <Skeleton className="h-6 w-full max-w-2xl" />
+              <div className="flex gap-6">
+                <Skeleton className="h-6 w-32" />
+                <Skeleton className="h-6 w-24" />
+                <Skeleton className="h-6 w-28" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="py-16 lg:py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+              <div className="lg:col-span-2 space-y-6">
+                <Skeleton className="h-8 w-48" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[1, 2, 3, 4].map((i) => <Skeleton key={i} className="aspect-square rounded-xl" />)}
+                </div>
+              </div>
+              <div className="space-y-6">
+                <Skeleton className="h-64 rounded-3xl" />
+                <Skeleton className="h-96 rounded-3xl" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <Footer />
       </div>
     );
   }
@@ -132,7 +165,34 @@ const PackageDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title={`${pkg.name} | Awili Safaris`}
+        description={pkg.short_description || pkg.description.substring(0, 160)}
+        keywords={`${pkg.name}, ${pkg.location} safari, Kenya safari, ${pkg.category || 'safari'} package`}
+        jsonLd={createPackageSchema({
+          name: pkg.name,
+          description: pkg.description,
+          price: pkg.price_non_resident,
+          duration: pkg.duration,
+          location: pkg.location,
+          image: heroImg,
+          rating: pkg.rating || undefined,
+          reviewsCount: pkg.reviews_count || undefined,
+        })}
+      />
       <Header />
+      
+      {/* Breadcrumb */}
+      <div className="bg-muted/50 border-b border-border">
+        <div className="container mx-auto px-4 lg:px-8 py-3">
+          <PageBreadcrumb 
+            items={[
+              { label: 'Destinations', href: '/#destinations' },
+              { label: pkg.name }
+            ]} 
+          />
+        </div>
+      </div>
       
       {/* Hero Section */}
       <section className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
@@ -143,15 +203,6 @@ const PackageDetail = () => {
         <div className="absolute inset-0 hero-overlay" />
         
         <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex flex-col justify-end pb-12 lg:pb-16">
-          {/* Back Button */}
-          <Link
-            to="/"
-            className="absolute top-24 left-4 lg:left-8 flex items-center gap-2 text-white/80 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Packages
-          </Link>
-
           {/* Package Info */}
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-4">

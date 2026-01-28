@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Sun, Cloud, CloudRain, Thermometer, Eye, Calendar, MapPin, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Sun, Cloud, CloudRain, Thermometer, Eye, Calendar, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEO from '@/components/SEO';
 
 interface WildlifeEvent {
   animal: string;
@@ -227,18 +229,23 @@ const WildlifeCalendar = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Wildlife & Weather Calendar | Awili Safaris"
+        description="Plan your Kenya safari with our month-by-month wildlife calendar. Discover the best times to see the Great Migration, Big Five, and seasonal wildlife events."
+        keywords="Kenya wildlife calendar, best time safari Kenya, Great Migration timing, Kenya weather, safari seasons"
+      />
       <Header />
 
       {/* Hero Section */}
       <section className="relative py-20 lg:py-28 bg-gradient-to-br from-safari/10 via-background to-primary/5">
         <div className="container mx-auto px-4 lg:px-8">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Home
-          </Link>
+          <PageBreadcrumb 
+            items={[
+              { label: 'Plan Your Trip', href: '/' },
+              { label: 'Wildlife Calendar' }
+            ]} 
+            className="mb-8"
+          />
 
           <div className="max-w-3xl">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">

@@ -1,14 +1,15 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, Calendar, Users, User, Minus, Plus, Home, Plane, Camera, Loader2, Check, Info, Star } from 'lucide-react';
+import { Calendar, Users, User, Minus, Plus, Home, Plane, Camera, Loader2, Check, Info, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import PageBreadcrumb from '@/components/PageBreadcrumb';
+import SEO from '@/components/SEO';
 import { usePackages } from '@/hooks/usePackages';
 import { format, addDays } from 'date-fns';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-
 interface AddOn {
   id: string;
   name: string;
@@ -128,18 +129,23 @@ const InstantQuote = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Instant Safari Quote Calculator | Awili Safaris"
+        description="Get real-time pricing for your Kenya safari. Customize your package with dates, guests, and add-ons to see your total instantly. No hidden fees."
+        keywords="safari quote, Kenya safari price, safari calculator, safari cost, instant quote"
+      />
       <Header />
 
       {/* Hero */}
       <section className="py-20 lg:py-28 bg-gradient-to-br from-primary/10 via-background to-safari/5">
         <div className="container mx-auto px-4 lg:px-8">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Home
-          </Link>
+          <PageBreadcrumb 
+            items={[
+              { label: 'Plan Your Trip', href: '/' },
+              { label: 'Instant Quote' }
+            ]} 
+            className="mb-8"
+          />
 
           <div className="max-w-3xl">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">
