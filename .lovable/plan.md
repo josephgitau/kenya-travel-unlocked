@@ -1,186 +1,133 @@
 
 
-# Destination Page UI/UX Redesign Plan
+# Itinerary Section Implementation Plan
 
 ## Overview
 
-This plan transforms the Destination Guide page to match the homepage's premium "Luxury meets Adventure" aesthetic while dramatically improving user experience through better information hierarchy, visual polish, and conversion optimization.
+The `ItinerarySection` component exists but is not being used anywhere in the application. This plan implements a dynamic, database-connected Featured Itinerary section on the homepage that showcases a popular safari package's day-by-day journey.
 
 ---
 
-## Current Issues Identified
+## Current Issues
 
-1. **Hero Section**: Less impactful than homepage - missing trust elements, badge styling differs, no animated entry
-2. **Content Layout**: Dense information blocks without visual breathing room
-3. **Wildlife Cards**: Generic icons (all Binoculars) - missing personality and animal imagery
-4. **Section Headers**: Inconsistent styling compared to homepage's uppercase labels + large titles
-5. **Sidebar Design**: Cards feel flat compared to homepage's elevated cards with hover states
-6. **Photo Gallery**: Positioned too early, interrupts content flow
-7. **Floating CTA**: Functional but lacks the polish of homepage CTAs
-8. **Missing Elements**: No stats strip, no testimonial/trust element, no "How it Works" equivalent
+1. **Component Not Used**: `ItinerarySection.tsx` is not imported in `Index.tsx` or any page
+2. **Static Hardcoded Data**: The component has a fixed 3-day Maasai Mara itinerary instead of fetching from the database
+3. **No Package Selection**: Users can't see different package itineraries
+4. **Disconnect from Database**: The `packages` table has rich `itinerary` JSONB data that's unused here
 
 ---
 
-## Redesign Strategy
+## Implementation Strategy
 
-### 1. Premium Hero Section (Match Homepage Hero)
+### 1. Convert to Dynamic Component
 
-**Changes:**
-- Full viewport height (100svh) with parallax-ready background
-- Add animated badge with pulse indicator: "Top Safari Destination"
-- Larger headline with gold accent text for category
-- Add a **Trust Strip** below hero content (matching homepage pattern)
-- Relocate stats cards inside the hero overlay with glass-morphism effect
-- Add smooth scroll indicator with "Discover More" text
+Transform `ItinerarySection` to fetch and display a featured package's itinerary from the database:
 
-**Visual Pattern (from Homepage):**
-```text
-+------------------------------------------+
-|  [Badge with pulse] Top Safari Park      |
-|                                          |
-|  Destination Name                        |
-|  [Gold Accent] tagline text              |
-|                                          |
-|  [Stats Cards - Glass Effect]            |
-|  Best Time | Wildlife | Distance | Temp  |
-|                                          |
-|  [Trust Strip] 🦁 Big 5 | ⭐ Top Rated   |
-+------------------------------------------+
-```
+- Fetch the highest-rated or most-booked package automatically
+- Display the actual itinerary data from the `packages.itinerary` JSONB column
+- Show real pricing (`price_resident` and `price_non_resident`)
+- Link to the full package detail page
 
-### 2. Section Headers (Match Homepage Pattern)
+### 2. Add Package Selector Tabs
 
-**Consistent Pattern Across All Sections:**
-```text
-<span> UPPERCASE LABEL (Primary Color) </span>
-<h2> Section Title (Display Font, Bold) </h2>
-<p> Subtitle (Muted, Max-Width) </p>
-```
+Allow users to preview itineraries from multiple popular packages:
 
-Apply to: About, Wildlife, Activities, Where to Stay, Tips
+- Display 3-4 package tabs (e.g., "Maasai Mara", "Amboseli", "Diani Beach")
+- Tab switching loads that package's itinerary dynamically
+- Visual indicator for currently selected package
 
-### 3. Enhanced Wildlife Section
+### 3. Enhance Visual Design
 
-**Current Problem:** Generic binoculars icon for all animals
+Match the premium aesthetic of the recently updated components:
 
-**Solution:**
-- Add emoji/icon mapping for common animals (🦁 Lion, 🐘 Elephant, 🦓 Zebra, etc.)
-- Create visual "Wildlife Spotlight" cards with:
-  - Gradient background per animal category
-  - Viewing probability badge (Excellent/Good/Rare)
-  - Best viewing time as a pill
-- Add a "Signature Sighting" feature card for the destination's most famous animal
+- Glass-morphism sidebar card for pricing
+- Timeline with gradient day markers
+- Highlight pills with category colors
+- Meals and accommodation badges
+- Animated transitions when switching packages
 
-### 4. Activities Section Redesign
+### 4. Add to Homepage
 
-**Changes:**
-- Convert to a visual grid (2 columns) instead of list
-- Each activity card gets:
-  - Large icon with gradient background (matching FeaturedExperiences style)
-  - Duration badge prominently displayed
-  - Hover effect with arrow reveal
-- Group activities by type: "Safari", "Cultural", "Adventure"
+Import and position the component in `Index.tsx`:
 
-### 5. Sidebar Modernization
-
-**Changes:**
-- Add subtle gradient backgrounds to cards (like homepage "Why Choose Us")
-- Implement proper card elevation with hover states
-- Add visual icons to seasonal indicators
-- Create a "Pro Tip" callout card with special styling
-
-### 6. Where to Stay - Premium Grid
-
-**Changes:**
-- Transform into visual cards with lodge images (placeholder if needed)
-- Add star rating visual
-- Price range shown as visual indicator ($ to $$$)
-- "Our Pick" badge for recommended option
-- Hover effect with "View Lodge" CTA
-
-### 7. Photo Gallery Repositioning
-
-**Move gallery to after "Where to Stay"** - this creates a natural visual break before the conversion sections
-
-### 8. Enhanced Floating CTA Bar
-
-**Changes:**
-- Add subtle gradient border-top
-- Show destination image thumbnail on desktop
-- Add "Starting from $XXX" pricing indicator
-- Pulse animation on primary CTA button
-- Add "Chat on WhatsApp" as secondary option with WhatsApp icon
-
-### 9. New Section: Quick Decision Module
-
-Add a new section after Wildlife (matching homepage "How We Work" style):
-
-```text
-+------------------+------------------+------------------+
-|   📅 Best Time   |   🎯 Ideal For   |   ⏱️ Duration   |
-|   July - Oct     |   Families       |   3-5 Days       |
-|   "Peak Season"  |   "Easy Access"  |   "Recommended"  |
-+------------------+------------------+------------------+
-```
-
-### 10. Related Packages Section Enhancement
-
-**Changes:**
-- Match PopularPackages carousel style with navigation arrows
-- Add "Most Booked" badge to top package
-- Horizontal scroll with drag support
-- "View All Packages" link at bottom
+- Place after `PopularPackages` section for logical flow
+- Users see packages → then see what a typical experience looks like
 
 ---
 
-## Technical Implementation Details
+## Technical Details
 
-**File Modified:** `src/pages/DestinationGuide.tsx`
+### Files to Modify
 
-**New Components/Elements:**
-- `DestinationTrustStrip` - Trust indicators below hero
-- `QuickDecisionModule` - 3-column decision helper
-- Enhanced wildlife emoji mapping
-- Improved card hover animations
+| File | Changes |
+|------|---------|
+| `src/components/ItinerarySection.tsx` | Complete rewrite - add database fetching, package tabs, dynamic rendering |
+| `src/pages/Index.tsx` | Add import and include `<ItinerarySection />` component |
 
-**CSS Utilities Used:**
-- `animate-fade-in-up` with stagger classes
-- `backdrop-blur-md` for glass effects
-- `shadow-elevated` for premium card depth
-- `btn-gold` with pulse animation
+### Data Flow
 
-**Responsive Considerations:**
-- Stats cards: 4-column desktop, 2x2 mobile
-- Wildlife grid: 3-column desktop, 1-column mobile
-- Activities: 2-column desktop, stack on mobile
-- Floating CTA: Full width mobile, partial desktop
+```text
+usePackages hook → Filter top 4 packages → Display tabs
+                                        ↓
+               Selected package → Render itinerary timeline
+                                → Show included items
+                                → Show pricing
+```
+
+### Component Structure
+
+```text
+ItinerarySection
+├── Section Header (uppercase label + title)
+├── Package Selector Tabs (4 packages)
+├── Two-Column Layout
+│   ├── Left: Timeline
+│   │   ├── Day markers with numbers
+│   │   ├── Title + description cards
+│   │   ├── Highlight pills
+│   │   └── Meals/accommodation badges
+│   └── Right: Sticky Sidebar
+│       ├── What's Included (with icons)
+│       ├── Pricing (Resident/Non-Resident)
+│       └── CTA buttons (View Full Package, Request Quote)
+```
+
+### Responsive Behavior
+
+- **Desktop**: Side-by-side timeline and pricing card
+- **Tablet**: Stack with pricing card above timeline
+- **Mobile**: Full-width stacked, tabs become horizontal scroll
 
 ---
 
-## Visual Hierarchy Flow
+## Visual Design Elements
 
-```text
-1. Hero (Full Impact) → Emotional Hook
-2. Trust Strip → Credibility
-3. About + Quick Decision → Orientation
-4. Wildlife Spotlight → Core Value
-5. Activities Grid → Experience Preview
-6. Sidebar (When/Weather/Getting There) → Practical Info
-7. Where to Stay → Accommodation Options
-8. Photo Gallery → Visual Proof
-9. Insider Tips + Facts → Expert Value
-10. Related Packages → Conversion
-11. Explore More → Navigation
-12. Floating CTA → Always-On Conversion
-```
+### Package Tabs
+- Horizontal pills with package names
+- Active tab: Primary background, bold text
+- Inactive tabs: Muted background, hover effect
+
+### Timeline Cards
+- Day number in primary-colored circle
+- Connecting line between days
+- Glass-effect card with shadow
+- Highlight pills in primary/10 background
+- Meals icon row (Breakfast, Lunch, Dinner badges)
+
+### Pricing Sidebar
+- Sticky positioning (top-32)
+- "What's Included" with mapped icons
+- Price display with resident/non-resident split
+- Primary CTA: "View Full Package" (links to detail page)
+- Secondary CTA: "Request Quote" (scrolls to contact)
 
 ---
 
 ## Expected Outcomes
 
-- **Improved Visual Consistency**: Matches homepage's premium safari aesthetic
-- **Better Scannability**: Clear section headers and visual hierarchy
-- **Increased Engagement**: Interactive wildlife cards and activity grid
-- **Higher Conversion**: Enhanced CTAs with pricing visibility
-- **Mobile Excellence**: Touch-friendly cards and gestures
+- **Homepage Completion**: The itinerary section will be visible and functional
+- **Dynamic Content**: Fetches real package data from the database
+- **User Engagement**: Interactive tabs let users explore different safari options
+- **Conversion Path**: Clear CTAs guide users to booking or inquiry
+- **Visual Consistency**: Matches the premium aesthetic of other homepage sections
 
