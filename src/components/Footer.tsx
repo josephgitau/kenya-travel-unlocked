@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube, Shield, Award, CreditCard, Calendar, HelpCircle, Calculator, Loader2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Youtube, Shield, Award, CreditCard, Calendar, HelpCircle, Calculator, Loader2, ArrowRight, Globe, Headphones, Send } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -48,7 +48,7 @@ const Footer = () => {
         .insert({ email: email.trim() });
 
       if (error) {
-        if (error.code === '23505') { // Unique violation
+        if (error.code === '23505') {
           toast({
             title: 'Already subscribed',
             description: 'This email is already on our mailing list!',
@@ -76,25 +76,24 @@ const Footer = () => {
   };
 
   const safariPackages = [
-    { label: 'Maasai Mara Safari Adventure', href: '/package/maasai-mara' },
+    { label: 'Maasai Mara Safari', href: '/package/maasai-mara' },
     { label: 'Amboseli Elephant Paradise', href: '/package/amboseli' },
-    { label: 'Samburu Wilderness Experience', href: '/package/samburu' },
-    { label: 'Diani Beach Coastal Escape', href: '/package/diani-beach' },
-    { label: 'Lake Naivasha Weekend Getaway', href: '/package/lake-naivasha' },
+    { label: 'Samburu Wilderness', href: '/package/samburu' },
+    { label: 'Diani Beach Escape', href: '/package/diani-beach' },
+    { label: 'Lake Naivasha Getaway', href: '/package/lake-naivasha' },
   ];
 
   const planYourSafari = [
     { label: 'Wildlife Calendar', href: '/calendar', icon: Calendar },
     { label: 'Safari Quiz', href: '/quiz', icon: HelpCircle },
     { label: 'Instant Quote', href: '/quote', icon: Calculator },
-    { label: 'Destinations Guide', href: '/destinations', icon: MapPin },
+    { label: 'All Destinations', href: '/destinations', icon: MapPin },
   ];
 
   const quickLinks = [
     { label: 'Home', href: '/', isRoute: true },
     { label: 'Destinations', href: '#destinations', isRoute: false },
     { label: 'Experiences', href: '#experiences', isRoute: false },
-    { label: 'Sample Itinerary', href: '#itinerary', isRoute: false },
     { label: 'Contact Us', href: '#contact', isRoute: false },
   ];
 
@@ -104,261 +103,336 @@ const Footer = () => {
     { label: 'Cancellation Policy', href: '/cancellation' },
   ];
 
+  const socialLinks = [
+    { icon: Facebook, href: 'https://facebook.com/awilisafaris', label: 'Facebook', hoverColor: 'hover:bg-[#1877F2]' },
+    { icon: Instagram, href: 'https://instagram.com/awilisafaris', label: 'Instagram', hoverColor: 'hover:bg-gradient-to-tr hover:from-[#FCAF45] hover:via-[#E1306C] hover:to-[#833AB4]' },
+    { icon: Twitter, href: 'https://twitter.com/awilisafaris', label: 'Twitter', hoverColor: 'hover:bg-[#1DA1F2]' },
+    { icon: Youtube, href: 'https://youtube.com/@awilisafaris', label: 'YouTube', hoverColor: 'hover:bg-[#FF0000]' },
+  ];
+
   return (
-    <footer className="bg-earth text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-white/10">
-        <div className="container mx-auto px-4 lg:px-8 py-10 lg:py-12">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="text-center lg:text-left">
-              <h3 className="font-display text-xl lg:text-2xl font-bold mb-2">Get Safari Deals & Travel Tips</h3>
-              <p className="text-white/70 text-sm lg:text-base">Subscribe for exclusive offers and Kenya travel inspiration</p>
+    <footer className="relative bg-gradient-to-b from-earth to-[hsl(25_30%_22%)] text-white overflow-hidden">
+      {/* Decorative Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+      </div>
+
+      {/* Newsletter Section - Premium CTA */}
+      <div className="relative border-b border-white/10">
+        <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
+          <div className="relative bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-3xl p-8 lg:p-12 overflow-hidden">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-primary/5 rounded-full" />
+            
+            <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="text-center lg:text-left max-w-lg">
+                <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                  <Send className="w-4 h-4" />
+                  Join Our Safari Community
+                </div>
+                <h3 className="font-display text-2xl lg:text-3xl font-bold mb-3">
+                  Get Exclusive Safari Deals
+                </h3>
+                <p className="text-white/70 text-base lg:text-lg">
+                  Subscribe for travel tips, wildlife updates, and member-only discounts on Kenya adventures.
+                </p>
+              </div>
+              
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <div className="relative flex-1 min-w-0 lg:min-w-[300px]">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/50 outline-none focus:border-primary focus:bg-white/15 transition-all duration-300"
+                    disabled={isSubmitting}
+                  />
+                </div>
+                <button 
+                  type="submit" 
+                  className="group btn-gold py-4 px-8 rounded-xl whitespace-nowrap disabled:opacity-50 flex items-center justify-center gap-2 font-semibold"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Subscribing...
+                    </>
+                  ) : (
+                    <>
+                      Subscribe
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto max-w-md">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/50 outline-none focus:border-primary transition-colors"
-                disabled={isSubmitting}
-              />
-              <button 
-                type="submit" 
-                className="btn-gold py-3 px-6 rounded-full whitespace-nowrap disabled:opacity-50 flex items-center justify-center gap-2"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Subscribing...
-                  </>
-                ) : (
-                  'Subscribe'
-                )}
-              </button>
-            </form>
           </div>
         </div>
       </div>
 
-      {/* Main Footer */}
-      <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
-          {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-5">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xl">A</span>
+      {/* Main Footer Content */}
+      <div className="relative container mx-auto px-4 lg:px-8 py-14 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+          
+          {/* Brand Section */}
+          <div className="lg:col-span-4 space-y-6">
+            <Link to="/" className="inline-flex items-center gap-3 group">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-gold-dark flex items-center justify-center shadow-gold group-hover:scale-105 transition-transform">
+                <span className="text-primary-foreground font-display font-bold text-2xl">A</span>
               </div>
-              <span className="font-display text-2xl font-bold text-white">
-                Awili<span className="text-primary">Safaris</span>
-              </span>
+              <div>
+                <span className="font-display text-2xl font-bold text-white block">
+                  Awili<span className="text-primary">Safaris</span>
+                </span>
+                <span className="text-white/50 text-xs uppercase tracking-wider">Kenya Adventures</span>
+              </div>
             </Link>
-            <p className="text-white/70 mb-5 leading-relaxed max-w-sm">
-              Your trusted partner for unforgettable Kenyan adventures. From the rolling plains of the Mara to the pristine beaches of Diani, we create memories that last a lifetime.
+            
+            <p className="text-white/70 leading-relaxed text-base max-w-sm">
+              Your trusted partner for unforgettable Kenyan adventures. From the Mara's rolling plains to Diani's pristine beaches, we create lifelong memories.
             </p>
             
-            {/* Trust Badges */}
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-              <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2">
-                <Shield className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium">TRA Licensed</span>
+            {/* Trust Badges - Premium Style */}
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 hover:bg-white/10 transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                  <Shield className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-white">TRA Licensed</p>
+                  <p className="text-[10px] text-white/50">Tourism Authority</p>
+                </div>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-2">
-                <Award className="w-4 h-4 text-primary" />
-                <span className="text-xs font-medium">KATO Member</span>
+              <div className="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 hover:bg-white/10 transition-colors">
+                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                  <Award className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-white">KATO Member</p>
+                  <p className="text-[10px] text-white/50">Verified Operator</p>
+                </div>
               </div>
             </div>
             
-            {/* Social Links */}
-            <div className="flex gap-3">
-              <a 
-                href="https://facebook.com/awilisafaris" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Facebook"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1877F2] flex items-center justify-center transition-colors"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://instagram.com/awilisafaris" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Instagram"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#E4405F] flex items-center justify-center transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://twitter.com/awilisafaris" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Follow us on Twitter"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1DA1F2] flex items-center justify-center transition-colors"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a 
-                href="https://youtube.com/@awilisafaris" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Subscribe on YouTube"
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#FF0000] flex items-center justify-center transition-colors"
-              >
-                <Youtube className="w-5 h-5" />
-              </a>
+            {/* Social Links - Modern Style */}
+            <div className="pt-2">
+              <p className="text-white/50 text-sm mb-3 font-medium">Follow Our Adventures</p>
+              <div className="flex gap-2">
+                {socialLinks.map((social) => (
+                  <a 
+                    key={social.label}
+                    href={social.href} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label={`Follow us on ${social.label}`}
+                    className={`w-11 h-11 rounded-xl bg-white/5 border border-white/10 ${social.hoverColor} flex items-center justify-center transition-all duration-300 hover:scale-105 hover:border-transparent`}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Safari Packages */}
-          <div>
-            <h4 className="font-display text-lg font-bold mb-5">Safari Packages</h4>
-            <ul className="space-y-3">
-              {safariPackages.map((link) => (
-                <li key={link.label}>
-                  <Link 
-                    to={link.href} 
-                    className="text-sm text-white/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links Columns */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              
+              {/* Safari Packages */}
+              <div>
+                <h4 className="font-display text-base font-bold mb-5 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Safari Packages
+                </h4>
+                <ul className="space-y-3">
+                  {safariPackages.map((link) => (
+                    <li key={link.label}>
+                      <Link 
+                        to={link.href} 
+                        className="group text-sm text-white/60 hover:text-primary transition-colors flex items-center gap-1"
+                      >
+                        <span>{link.label}</span>
+                        <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          {/* Plan Your Safari - NEW */}
-          <div>
-            <h4 className="font-display text-lg font-bold mb-5">Plan Your Safari</h4>
-            <ul className="space-y-3">
-              {planYourSafari.map((link) => (
-                <li key={link.label}>
-                  <Link 
-                    to={link.href} 
-                    className="flex items-center gap-2 text-sm text-white/70 hover:text-primary transition-colors"
-                  >
-                    <link.icon className="w-4 h-4" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              {/* Plan Your Safari */}
+              <div>
+                <h4 className="font-display text-base font-bold mb-5 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Plan Your Trip
+                </h4>
+                <ul className="space-y-3">
+                  {planYourSafari.map((link) => (
+                    <li key={link.label}>
+                      <Link 
+                        to={link.href} 
+                        className="group flex items-center gap-2.5 text-sm text-white/60 hover:text-primary transition-colors"
+                      >
+                        <link.icon className="w-4 h-4 text-white/40 group-hover:text-primary transition-colors" />
+                        <span>{link.label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display text-lg font-bold mb-5">Quick Links</h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  {link.isRoute ? (
-                    <Link 
-                      to={link.href} 
-                      className="text-sm text-white/70 hover:text-primary transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <button 
-                      onClick={() => scrollToSection(link.href)}
-                      className="text-sm text-white/70 hover:text-primary transition-colors"
-                    >
-                      {link.label}
-                    </button>
-                  )}
-                </li>
-              ))}
-              <li className="pt-2 border-t border-white/10 mt-3">
-                <span className="text-xs text-white/40 uppercase tracking-wider">Legal</span>
-              </li>
-              {legalLinks.map((link) => (
-                <li key={link.label}>
-                  <Link 
-                    to={link.href} 
-                    className="text-sm text-white/70 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-display text-base font-bold mb-5 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Quick Links
+                </h4>
+                <ul className="space-y-3">
+                  {quickLinks.map((link) => (
+                    <li key={link.label}>
+                      {link.isRoute ? (
+                        <Link 
+                          to={link.href} 
+                          className="text-sm text-white/60 hover:text-primary transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      ) : (
+                        <button 
+                          onClick={() => scrollToSection(link.href)}
+                          className="text-sm text-white/60 hover:text-primary transition-colors"
+                        >
+                          {link.label}
+                        </button>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Legal Links */}
+                <div className="mt-6 pt-4 border-t border-white/10">
+                  <p className="text-[10px] text-white/40 uppercase tracking-wider mb-3 font-medium">Legal</p>
+                  <ul className="space-y-2">
+                    {legalLinks.map((link) => (
+                      <li key={link.label}>
+                        <Link 
+                          to={link.href} 
+                          className="text-xs text-white/50 hover:text-primary transition-colors"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="font-display text-lg font-bold mb-5">Contact Us</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-white/70 text-sm">
-                    Awili Safaris Office,<br />
-                    Westlands Business Center,<br />
-                    Waiyaki Way, Nairobi, Kenya
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <div>
-                  <a href="tel:+254712345678" className="text-white/70 hover:text-primary transition-colors text-sm block">
-                    +254 712 345 678
-                  </a>
-                  <a href="tel:+254798765432" className="text-white/70 hover:text-primary transition-colors text-sm block">
-                    +254 798 765 432
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <div>
-                  <a href="mailto:info@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors text-sm block">
-                    info@awilisafaris.co.ke
-                  </a>
-                  <a href="mailto:bookings@awilisafaris.co.ke" className="text-white/70 hover:text-primary transition-colors text-sm block">
-                    bookings@awilisafaris.co.ke
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div className="text-sm text-white/70">
-                  <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
-                  <p>Saturday: 9:00 AM - 4:00 PM</p>
-                  <p>Sunday: Closed</p>
-                  <p className="text-xs text-white/50 mt-1">(24/7 Emergency support for active tours)</p>
-                </div>
-              </li>
-            </ul>
+              {/* Contact Info */}
+              <div>
+                <h4 className="font-display text-base font-bold mb-5 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Get In Touch
+                </h4>
+                <ul className="space-y-4">
+                  <li className="group">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white/5 group-hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors">
+                        <MapPin className="w-4 h-4 text-primary" />
+                      </div>
+                      <p className="text-sm text-white/60 leading-relaxed">
+                        Westlands Business Center,<br />
+                        Waiyaki Way, Nairobi
+                      </p>
+                    </div>
+                  </li>
+                  <li className="group">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white/5 group-hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors">
+                        <Phone className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="space-y-1">
+                        <a href="tel:+254712345678" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          +254 712 345 678
+                        </a>
+                        <a href="tel:+254798765432" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          +254 798 765 432
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="group">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white/5 group-hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors">
+                        <Mail className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="space-y-1">
+                        <a href="mailto:info@awilisafaris.co.ke" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          info@awilisafaris.co.ke
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="group">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-white/5 group-hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors">
+                        <Clock className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="text-sm text-white/60">
+                        <p>Mon - Sat: 8AM - 6PM</p>
+                        <p className="text-xs text-white/40 mt-1 flex items-center gap-1">
+                          <Headphones className="w-3 h-3" />
+                          24/7 Tour Support
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/10">
+      {/* Bottom Bar - Premium Style */}
+      <div className="relative border-t border-white/10 bg-black/20">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            
             {/* Payment Methods */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-              <div className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-white/60" />
-                <span className="text-sm text-white/60">We accept:</span>
+              <div className="flex items-center gap-2 text-white/50">
+                <CreditCard className="w-4 h-4" />
+                <span className="text-sm">Secure Payments:</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="bg-[#00A884] px-3 py-1.5 rounded text-xs font-bold text-white">M-Pesa</div>
-                <div className="bg-[#1A1F71] px-3 py-1.5 rounded text-xs font-bold text-white">VISA</div>
-                <div className="bg-[#EB001B] px-3 py-1.5 rounded text-xs font-bold text-white">MasterCard</div>
-                <div className="bg-white/90 px-3 py-1.5 rounded text-xs font-bold text-gray-800">PayPal</div>
+                <div className="bg-[#00A884] px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-sm">M-Pesa</div>
+                <div className="bg-gradient-to-r from-[#1A1F71] to-[#2557D6] px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-sm">VISA</div>
+                <div className="bg-gradient-to-r from-[#EB001B] to-[#F79E1B] px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-sm">Mastercard</div>
+                <div className="bg-white px-3 py-1.5 rounded-lg text-xs font-bold text-[#003087] shadow-sm">PayPal</div>
               </div>
             </div>
 
-            {/* Copyright */}
-            <div className="text-sm text-white/60 text-center lg:text-right">
-              <p>© {currentYear} Awili Safaris. All rights reserved.</p>
-              <p className="text-xs text-white/40 mt-1">TRA License No: TRA/2024/XXXX | KATO Member ID: XXXX</p>
+            {/* Copyright & Language */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 text-center lg:text-right">
+              <div className="flex items-center gap-2 text-white/40 text-sm">
+                <Globe className="w-4 h-4" />
+                <span>English</span>
+              </div>
+              <div className="text-sm text-white/50">
+                <p>© {currentYear} Awili Safaris. All rights reserved.</p>
+              </div>
             </div>
+          </div>
+          
+          {/* License Info */}
+          <div className="mt-4 pt-4 border-t border-white/5 text-center">
+            <p className="text-xs text-white/30">
+              Licensed by Tourism Regulatory Authority (TRA) • Kenya Association of Tour Operators (KATO) Member
+            </p>
           </div>
         </div>
       </div>
