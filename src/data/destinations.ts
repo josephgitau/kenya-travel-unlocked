@@ -19,7 +19,12 @@ import dianiBeach from '@/assets/diani-beach.jpg';
 import dianiOcean from '@/assets/diani-ocean.jpg';
 import dianiResort from '@/assets/diani-resort.jpg';
 import dianiSnorkeling from '@/assets/diani-snorkeling.jpg';
-import heroSafari from '@/assets/hero-safari.jpg';
+// New unique destination images
+import tsavo from '@/assets/tsavo.jpg';
+import laikipia from '@/assets/laikipia.jpg';
+import lakeNakuru from '@/assets/lake-nakuru.jpg';
+import mountKenya from '@/assets/mount-kenya.jpg';
+import lamu from '@/assets/lamu.jpg';
 
 export interface DestinationData {
   slug: string;
@@ -393,8 +398,8 @@ export const destinationsData: Record<string, DestinationData> = {
     slug: 'tsavo',
     name: 'Tsavo',
     tagline: 'Kenya\'s Largest Wilderness - Land of the Red Elephants',
-    heroImage: heroSafari,
-    gallery: [heroSafari],
+    heroImage: tsavo,
+    gallery: [tsavo],
     category: 'safari',
     description: 'Tsavo is Kenya\'s largest protected area, comprising Tsavo East and Tsavo West national parks covering over 20,000 km². This vast wilderness is famous for its red elephants (dusted with the distinctive red soil), the Man-Eaters of Tsavo legend, and dramatic volcanic landscapes including the Shetani Lava Flow.',
     history: 'The parks were established in 1948 and named after the Tsavo River. Tsavo gained international notoriety in 1898 when two maneless lions killed 135 railway workers during the construction of the Kenya-Uganda Railway. The "Man-Eaters of Tsavo" story was immortalized in the film "The Ghost and the Darkness." Today, the parks protect one of Africa\'s largest elephant populations.',
@@ -456,8 +461,8 @@ export const destinationsData: Record<string, DestinationData> = {
     slug: 'laikipia',
     name: 'Laikipia Plateau',
     tagline: 'Africa\'s Conservation Success Story',
-    heroImage: heroSafari,
-    gallery: [heroSafari],
+    heroImage: laikipia,
+    gallery: [laikipia],
     category: 'safari',
     description: 'The Laikipia Plateau is Kenya\'s premier conservation destination and a remarkable success story of community and private conservancies working together. This vast mosaic of ranches and wildlife sanctuaries has the second-highest wildlife density in Kenya after the Maasai Mara, including the last viable population of African wild dogs.',
     history: 'Laikipia\'s conservation model evolved from colonial-era cattle ranches in the 1970s-80s when landowners began integrating wildlife with livestock. Today, the Laikipia ecosystem covers over 9,500 km² of mixed-use land where cattle, people, and wildlife coexist. It\'s home to Ol Pejeta Conservancy, the largest black rhino sanctuary in East Africa.',
@@ -519,8 +524,8 @@ export const destinationsData: Record<string, DestinationData> = {
     slug: 'lake-nakuru',
     name: 'Lake Nakuru',
     tagline: 'The Pink Lake - Flamingos & Rhino Sanctuary',
-    heroImage: heroSafari,
-    gallery: [heroSafari],
+    heroImage: lakeNakuru,
+    gallery: [lakeNakuru],
     category: 'rift-valley',
     description: 'Lake Nakuru National Park is a compact gem in Kenya\'s Great Rift Valley, famous for its spectacular flamingo gatherings, successful rhino sanctuary, and easy accessibility from Nairobi. The park\'s diverse habitats support an incredible variety of wildlife including the endangered Rothschild\'s giraffe.',
     history: 'Lake Nakuru was designated a national park in 1961, initially to protect the flamingos and aquatic environment. In the 1980s, it became a rhino sanctuary and has been crucial in rebuilding Kenya\'s rhino population. The lake\'s alkaline waters support massive algae blooms that attract millions of flamingos seasonally.',
@@ -582,8 +587,8 @@ export const destinationsData: Record<string, DestinationData> = {
     slug: 'mount-kenya',
     name: 'Mount Kenya',
     tagline: 'Africa\'s Second Highest Peak - Adventure & Wildlife',
-    heroImage: heroSafari,
-    gallery: [heroSafari],
+    heroImage: mountKenya,
+    gallery: [mountKenya],
     category: 'adventure',
     description: 'Mount Kenya is Africa\'s second-highest mountain and a UNESCO World Heritage Site, offering dramatic scenery from glaciers to tropical rainforests. The Mount Kenya National Park protects diverse ecosystems and unique wildlife while providing trekking adventures for all skill levels.',
     history: 'Called "Kirinyaga" (mountain of whiteness) by the Kikuyu people, Mount Kenya has been sacred for centuries. The first European to reach the summit was Halford Mackinder in 1899. The national park was established in 1949 and declared a UNESCO World Heritage Site in 1997 for its outstanding natural beauty and ecological importance.',
@@ -645,8 +650,8 @@ export const destinationsData: Record<string, DestinationData> = {
     slug: 'lamu',
     name: 'Lamu Island',
     tagline: 'Kenya\'s Swahili Coast Jewel - A Step Back in Time',
-    heroImage: heroSafari,
-    gallery: [heroSafari],
+    heroImage: lamu,
+    gallery: [lamu],
     category: 'beach',
     description: 'Lamu is Kenya\'s oldest continuously inhabited town and a UNESCO World Heritage Site, preserving 700 years of Swahili culture. This car-free island offers pristine beaches, traditional dhow sailing, and an authentic glimpse into East Africa\'s rich coastal heritage.',
     history: 'Founded in the 14th century, Lamu was a major center of the East African slave and ivory trade, and later became a hub for Swahili culture, architecture, and Islamic learning. The old town has barely changed in centuries, with its narrow streets, carved wooden doors, and distinctive Swahili architecture.',
@@ -753,7 +758,7 @@ export const destinationPreviews: DestinationPreview[] = [
     slug: 'tsavo',
     name: 'Tsavo',
     tagline: 'Land of the Red Elephants',
-    image: heroSafari,
+    image: tsavo,
     highlights: ['Red Elephants', 'Man-Eaters Legacy', 'Mzima Springs'],
     bestTime: 'Jun - Oct',
     wildlife: 'Red Elephants, Lions, Black Rhinos, Hippos',
@@ -763,7 +768,7 @@ export const destinationPreviews: DestinationPreview[] = [
     slug: 'laikipia',
     name: 'Laikipia Plateau',
     tagline: 'Africa\'s Conservation Success',
-    image: heroSafari,
+    image: laikipia,
     highlights: ['Wild Dogs', 'Rhino Tracking', 'Walking Safaris'],
     bestTime: 'Jul - Oct',
     wildlife: "Wild Dogs, Rhinos, Grevy's Zebra, Elephants",
@@ -784,7 +789,7 @@ export const destinationPreviews: DestinationPreview[] = [
     slug: 'lake-nakuru',
     name: 'Lake Nakuru',
     tagline: 'The Pink Lake',
-    image: heroSafari,
+    image: lakeNakuru,
     highlights: ['Flamingos', 'Rhino Sanctuary', "Rothschild's Giraffe"],
     bestTime: 'Jun - Sep',
     wildlife: 'Flamingos, Rhinos, Lions, Pelicans',
@@ -795,7 +800,7 @@ export const destinationPreviews: DestinationPreview[] = [
     slug: 'mount-kenya',
     name: 'Mount Kenya',
     tagline: 'Africa\'s Second Highest Peak',
-    image: heroSafari,
+    image: mountKenya,
     highlights: ['Peak Climbing', 'Forest Treks', 'Unique Wildlife'],
     bestTime: 'Jan - Feb, Jul - Sep',
     wildlife: 'Forest Elephants, Giant Forest Hogs, Colobus',
@@ -816,7 +821,7 @@ export const destinationPreviews: DestinationPreview[] = [
     slug: 'lamu',
     name: 'Lamu Island',
     tagline: 'UNESCO Swahili Heritage',
-    image: heroSafari,
+    image: lamu,
     highlights: ['Swahili Culture', 'Dhow Sailing', 'Pristine Beaches'],
     bestTime: 'Dec - Mar',
     wildlife: 'Sea Turtles, Dolphins, Tropical Fish',
