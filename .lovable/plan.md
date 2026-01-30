@@ -1,133 +1,115 @@
 
 
-# Itinerary Section Implementation Plan
+# Mobile Header Dropdown & Contact Info Update Plan
 
 ## Overview
 
-The `ItinerarySection` component exists but is not being used anywhere in the application. This plan implements a dynamic, database-connected Featured Itinerary section on the homepage that showcases a popular safari package's day-by-day journey.
+This plan addresses three distinct issues:
+1. **Transparent Mobile Header Dropdown** - The mobile navigation menu has no background when overlaying the hero section, making text unreadable
+2. **Trust Badge Update** - Replace "TRA Licensed" and "KATO Member" badges with "East Africa Tour Guides & Drivers Association"
+3. **Contact Info Update** - Change phone to 0722792069 and email to erickokungu90@gmail.com across all files
 
 ---
 
-## Current Issues
+## Issue 1: Mobile Header Dropdown Transparency
 
-1. **Component Not Used**: `ItinerarySection.tsx` is not imported in `Index.tsx` or any page
-2. **Static Hardcoded Data**: The component has a fixed 3-day Maasai Mara itinerary instead of fetching from the database
-3. **No Package Selection**: Users can't see different package itineraries
-4. **Disconnect from Database**: The `packages` table has rich `itinerary` JSONB data that's unused here
+### Problem
+On tablet and mobile devices, when the mobile menu opens over the hero section (which has an image background), the menu content blends with the hero image because the menu container lacks a solid background.
+
+### Root Cause
+The mobile menu container at line 182-231 in `Header.tsx` inherits the transparent header background when at the top of the page (homepage). The menu items need their own opaque background.
+
+### Solution
+Add a solid background with blur effect to the mobile menu container that activates regardless of scroll position:
+- Apply `bg-card/95 backdrop-blur-lg` to the mobile menu wrapper
+- Add `rounded-xl` with slight margin for visual polish
+- Ensure proper contrast for all text
 
 ---
 
-## Implementation Strategy
+## Issue 2: Trust Badges Update
 
-### 1. Convert to Dynamic Component
+### Current State
+Footer displays two trust badges:
+- "TRA Licensed - Tourism Authority"
+- "KATO Member - Verified Operator"
 
-Transform `ItinerarySection` to fetch and display a featured package's itinerary from the database:
+Also mentioned in the bottom bar license text.
 
-- Fetch the highest-rated or most-booked package automatically
-- Display the actual itinerary data from the `packages.itinerary` JSONB column
-- Show real pricing (`price_resident` and `price_non_resident`)
-- Link to the full package detail page
+### Required Change
+Replace both badges with a single new badge:
+- "East Africa Tour Guides & Drivers Association" (EATGDA)
 
-### 2. Add Package Selector Tabs
+### Files Affected
+- `src/components/Footer.tsx` (lines 200-220 for badges, line 434 for license text)
 
-Allow users to preview itineraries from multiple popular packages:
+---
 
-- Display 3-4 package tabs (e.g., "Maasai Mara", "Amboseli", "Diani Beach")
-- Tab switching loads that package's itinerary dynamically
-- Visual indicator for currently selected package
+## Issue 3: Contact Information Updates
 
-### 3. Enhance Visual Design
+### New Contact Details
+| Field | Old Value | New Value |
+|-------|-----------|-----------|
+| Phone | Various (+254700000000, +254712345678) | +254 722 792 069 |
+| WhatsApp | 254700000000 | 254722792069 |
+| Email | info@awilisafaris.co.ke | erickokungu90@gmail.com |
 
-Match the premium aesthetic of the recently updated components:
+### Files to Update
 
-- Glass-morphism sidebar card for pricing
-- Timeline with gradient day markers
-- Highlight pills with category colors
-- Meals and accommodation badges
-- Animated transitions when switching packages
-
-### 4. Add to Homepage
-
-Import and position the component in `Index.tsx`:
-
-- Place after `PopularPackages` section for logical flow
-- Users see packages → then see what a typical experience looks like
+| File | Changes |
+|------|---------|
+| `src/components/WhatsAppButton.tsx` | Update phone number |
+| `src/components/Header.tsx` | Update tel: links and display number |
+| `src/components/ContactSection.tsx` | Update phone, email, and WhatsApp link |
+| `src/components/Footer.tsx` | Update phone numbers and email |
+| `src/pages/DestinationGuide.tsx` | Update WhatsApp and tel links |
+| `src/pages/SafariQuiz.tsx` | Update WhatsApp link |
+| `src/pages/Privacy.tsx` | Update email and phone |
+| `src/pages/Terms.tsx` | Update email and phone |
+| `src/pages/Cancellation.tsx` | Update email, phone, and WhatsApp |
+| `src/components/SEO.tsx` | Update telephone in schema |
 
 ---
 
 ## Technical Details
 
-### Files to Modify
+### Header.tsx Mobile Menu Fix (lines 182-231)
 
-| File | Changes |
-|------|---------|
-| `src/components/ItinerarySection.tsx` | Complete rewrite - add database fetching, package tabs, dynamic rendering |
-| `src/pages/Index.tsx` | Add import and include `<ItinerarySection />` component |
-
-### Data Flow
+Add background classes to the mobile menu container:
 
 ```text
-usePackages hook → Filter top 4 packages → Display tabs
-                                        ↓
-               Selected package → Render itinerary timeline
-                                → Show included items
-                                → Show pricing
+Current:  <div className={`lg:hidden overflow-hidden...
+Updated:  <div className={`lg:hidden overflow-hidden...
+            <nav className="py-4 mt-4 bg-card/95 backdrop-blur-lg rounded-xl p-4...
 ```
 
-### Component Structure
+### Footer.tsx Trust Badge Changes
 
-```text
-ItinerarySection
-├── Section Header (uppercase label + title)
-├── Package Selector Tabs (4 packages)
-├── Two-Column Layout
-│   ├── Left: Timeline
-│   │   ├── Day markers with numbers
-│   │   ├── Title + description cards
-│   │   ├── Highlight pills
-│   │   └── Meals/accommodation badges
-│   └── Right: Sticky Sidebar
-│       ├── What's Included (with icons)
-│       ├── Pricing (Resident/Non-Resident)
-│       └── CTA buttons (View Full Package, Request Quote)
-```
+Replace the two badge divs (lines 201-220) with single EATGDA badge:
+- Icon: Users or Award icon
+- Title: "EATGDA Member"
+- Subtitle: "Certified Tour Guides"
 
-### Responsive Behavior
+Update bottom bar license text (line 434):
+- From: "Licensed by Tourism Regulatory Authority (TRA) • Kenya Association of Tour Operators (KATO) Member"
+- To: "East Africa Tour Guides & Drivers Association (EATGDA) Member"
 
-- **Desktop**: Side-by-side timeline and pricing card
-- **Tablet**: Stack with pricing card above timeline
-- **Mobile**: Full-width stacked, tabs become horizontal scroll
+### Contact Updates Summary
 
----
-
-## Visual Design Elements
-
-### Package Tabs
-- Horizontal pills with package names
-- Active tab: Primary background, bold text
-- Inactive tabs: Muted background, hover effect
-
-### Timeline Cards
-- Day number in primary-colored circle
-- Connecting line between days
-- Glass-effect card with shadow
-- Highlight pills in primary/10 background
-- Meals icon row (Breakfast, Lunch, Dinner badges)
-
-### Pricing Sidebar
-- Sticky positioning (top-32)
-- "What's Included" with mapped icons
-- Price display with resident/non-resident split
-- Primary CTA: "View Full Package" (links to detail page)
-- Secondary CTA: "Request Quote" (scrolls to contact)
+All occurrences of:
+- `254700000000` → `254722792069`
+- `+254 700 000 000` → `+254 722 792 069`
+- `+254 712 345 678` → `+254 722 792 069`
+- `+254 798 765 432` → Remove (keep single number)
+- `info@awilisafaris.co.ke` → `erickokungu90@gmail.com`
+- `privacy@awilisafaris.co.ke` → `erickokungu90@gmail.com`
+- `bookings@awilisafaris.co.ke` → `erickokungu90@gmail.com`
 
 ---
 
 ## Expected Outcomes
 
-- **Homepage Completion**: The itinerary section will be visible and functional
-- **Dynamic Content**: Fetches real package data from the database
-- **User Engagement**: Interactive tabs let users explore different safari options
-- **Conversion Path**: Clear CTAs guide users to booking or inquiry
-- **Visual Consistency**: Matches the premium aesthetic of other homepage sections
+1. **Mobile Menu Visibility** - Menu text will be clearly readable with solid background, regardless of hero image behind it
+2. **Updated Trust Badge** - Footer will display EATGDA membership instead of TRA/KATO
+3. **Consistent Contact Info** - All phone and email references across the site will show the new contact details
 
