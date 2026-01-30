@@ -98,7 +98,7 @@ const ContactSection = () => {
     {
       icon: MapPin,
       title: 'Visit Us',
-      content: 'Westlands Business Center, Nairobi, Kenya',
+      content: 'Kamakis, Nairobi, Kenya',
     },
     {
       icon: Phone,

@@ -338,9 +338,8 @@ const Footer = () => {
                         <MapPin className="w-4 h-4 text-primary" />
                       </div>
                       <p className="text-sm text-white/60 leading-relaxed">
-                        Westlands Business Center,<br />
-                        Waiyaki Way, Nairobi
-                      </p>
+341:                         Kamakis, Nairobi, Kenya
+342:                       </p>
                     </div>
                   </li>
                   <li className="group">
