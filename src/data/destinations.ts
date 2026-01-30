@@ -26,6 +26,18 @@ import lakeNakuru from '@/assets/lake-nakuru.jpg';
 import mountKenya from '@/assets/mount-kenya.jpg';
 import lamu from '@/assets/lamu.jpg';
 
+export interface PricingTier {
+  budget: string;
+  midRange: string;
+  luxury: string;
+}
+
+export interface QuickDecision {
+  bestTime: string;
+  idealFor: string;
+  recommendedStay: string;
+}
+
 export interface DestinationData {
   slug: string;
   name: string;
@@ -35,6 +47,14 @@ export interface DestinationData {
   description: string;
   history: string;
   category: 'safari' | 'beach' | 'rift-valley' | 'adventure';
+  // New 2026 pricing and quick decision data
+  quickDecision: QuickDecision;
+  pricing2026: PricingTier;
+  tripCost?: string; // Example trip cost estimate
+  parkFees?: string; // Daily park/reserve entry fees
+  signatureSighting: string;
+  viewingProbability: 'Excellent' | 'Good' | 'Moderate' | 'Rare';
+  insiderTip: string;
   wildlife: {
     name: string;
     description: string;
@@ -45,6 +65,7 @@ export interface DestinationData {
     description: string;
     duration: string;
     iconName: string;
+    cost?: string; // Activity cost where applicable
   }[];
   bestTime: {
     peak: string[];
@@ -83,6 +104,21 @@ export const destinationsData: Record<string, DestinationData> = {
     heroImage: maraLodge,
     gallery: [maraLions, maraMigration, maraGameDrive, maraBalloon, maraLodge],
     category: 'safari',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'July–October (Migration), Jan–March (Big Cats)',
+      idealFor: 'First-timers, Photographers',
+      recommendedStay: '3–4 Nights',
+    },
+    pricing2026: {
+      budget: '$250–$400 pppn',
+      midRange: '$500–$850 pppn',
+      luxury: '$1,000–$2,500+ pppn',
+    },
+    tripCost: '7 Days: Budget ~$3,000 | Mid-Range ~$5,500 | Luxury ~$9,000+',
+    signatureSighting: 'The Great Wildebeest Migration river crossings (July–Sept)',
+    viewingProbability: 'Excellent',
+    insiderTip: 'Stay in Mara North or Naboisho conservancies for exclusivity. Conservancy fees are ~$100–$120 pppn.',
     description: 'The Maasai Mara National Reserve is Kenya\'s most famous wildlife destination, renowned for the Great Migration and exceptional big cat sightings. This iconic savannah landscape offers unparalleled wildlife viewing opportunities year-round, with one of the highest predator densities in Africa.',
     history: 'Named after the Maasai people who have lived in the area for centuries and the Mara River that flows through it, the reserve was established in 1961. The name "Mara" means "spotted" in Maasai, referring to the dotted landscape of trees and shadows across the plains. Today, the Maasai Mara is part of the greater Mara-Serengeti ecosystem, one of Earth\'s most spectacular wildlife sanctuaries.',
     wildlife: [
@@ -146,6 +182,22 @@ export const destinationsData: Record<string, DestinationData> = {
     heroImage: amboseli,
     gallery: [amboseliElephants, amboseliLodge, amboseli],
     category: 'safari',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'June–October, Jan–Feb',
+      idealFor: 'Elephant lovers, Photographers',
+      recommendedStay: '2–3 Nights',
+    },
+    pricing2026: {
+      budget: '$200–$350 pppn',
+      midRange: '$450–$700 pppn',
+      luxury: '$800–$1,500 pppn',
+    },
+    tripCost: '3 Days: Budget ~$1,200 | Mid-Range ~$2,200 | Luxury ~$3,500+',
+    parkFees: '~$70–$100 per day for international tourists',
+    signatureSighting: 'Massive "Tuskers" framed against the snow-capped Mount Kilimanjaro',
+    viewingProbability: 'Excellent',
+    insiderTip: 'Park entry fees for 2026 are ~$70–$100 per day for international tourists.',
     description: 'Amboseli National Park offers one of Africa\'s most iconic views: large herds of elephants against the backdrop of Mount Kilimanjaro, Africa\'s highest peak. This 392 km² park is renowned for having the best-studied elephant population in the world and some of the largest tuskers in Africa.',
     history: 'Established as a reserve in 1948 and upgraded to national park status in 1974, Amboseli meaning "salty dust" in Maasai refers to the dry conditions. The park has been the subject of the Amboseli Elephant Research Project since 1972, one of the longest-running studies of any wild animal population.',
     wildlife: [
@@ -204,10 +256,26 @@ export const destinationsData: Record<string, DestinationData> = {
   'samburu': {
     slug: 'samburu',
     name: 'Samburu',
-    tagline: 'Where the Wild North Begins',
+    tagline: 'The Arid Frontier',
     heroImage: samburu,
     gallery: [samburuWildlife, samburuCulture, samburuRiver, samburu],
     category: 'safari',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'June–October, Dec–March',
+      idealFor: 'Seasoned safari-goers',
+      recommendedStay: '2–3 Nights',
+    },
+    pricing2026: {
+      budget: '$180–$300 pppn',
+      midRange: '$400–$650 pppn',
+      luxury: '$750–$1,400 pppn',
+    },
+    tripCost: '3 Days: Budget ~$1,100 | Mid-Range ~$2,000 | Luxury ~$3,200+',
+    parkFees: '~$70–$90 per day',
+    signatureSighting: 'The Gerenuk standing on its hind legs to reach acacia leaves',
+    viewingProbability: 'Good',
+    insiderTip: 'Reserve entry fees are ~$70–$90 per day. Fly-in options from Nairobi cost ~$150–$280 one-way.',
     description: 'Samburu National Reserve offers a unique safari experience with species found nowhere else in Kenya. The rugged, semi-arid landscape along the Ewaso Ng\'iro River is home to the famous "Samburu Special Five" - rare animals adapted to this dramatic northern terrain.',
     history: 'Named after the Samburu people, close relatives of the Maasai, the reserve was established in 1985. The Samburu culture remains vibrant, with traditional warriors still practicing age-old customs. The area is also linked to the Shaba and Buffalo Springs reserves, creating a larger wildlife ecosystem.',
     wildlife: [
@@ -267,10 +335,24 @@ export const destinationsData: Record<string, DestinationData> = {
   'lake-naivasha': {
     slug: 'lake-naivasha',
     name: 'Lake Naivasha',
-    tagline: 'A Freshwater Paradise in the Rift Valley',
+    tagline: 'The Serene Freshwater Oasis',
     heroImage: naivasha,
     gallery: [naivashaHippos, naivashaBoat, naivashaWildlife, naivasha],
     category: 'rift-valley',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'Year-round',
+      idealFor: 'Birders, Weekend escapes',
+      recommendedStay: '1–2 Nights',
+    },
+    pricing2026: {
+      budget: '$100–$200 pppn',
+      midRange: '$250–$450 pppn',
+      luxury: '$500–$900 pppn',
+    },
+    signatureSighting: 'Fish Eagles diving for prey against the Rift Valley backdrop',
+    viewingProbability: 'Excellent',
+    insiderTip: 'Combine with a cycling trip to Hell\'s Gate ($30 entry + $10 bike hire).',
     description: 'Lake Naivasha is a stunning freshwater lake in Kenya\'s Great Rift Valley, known for its abundant birdlife, large hippo population, and the dramatic nearby Hell\'s Gate National Park. It offers a unique blend of water-based safaris and adventure activities.',
     history: 'The lake\'s name comes from the Maasai word "nai\'posha" meaning "rough water" due to sudden storms. It has been a hub for Kenya\'s world-famous flower industry and provides a peaceful escape just 90km from Nairobi. The area was once home to early colonial settlers and adventurers.',
     wildlife: [
@@ -282,9 +364,9 @@ export const destinationsData: Record<string, DestinationData> = {
       { name: 'Waterbuck', description: 'Common around the lake shores and Crescent Island', bestTime: 'Year-round' },
     ],
     activities: [
-      { name: 'Boat Safari', description: 'See hippos, fish eagles, and papyrus beds up close', duration: '2 hours', iconName: 'Binoculars' },
-      { name: 'Hell\'s Gate Cycling', description: 'Cycle among wildlife, gorges, and geothermal vents', duration: '3-4 hours', iconName: 'Bike' },
-      { name: 'Crescent Island Walk', description: 'Walk among zebras, giraffes, and wildebeest - no predators', duration: '2 hours', iconName: 'Footprints' },
+      { name: 'Boat Safari', description: 'See hippos, fish eagles, and papyrus beds up close', duration: '2 hours', iconName: 'Binoculars', cost: '~$20–$40 pp' },
+      { name: 'Hell\'s Gate Cycling', description: 'Cycle among wildlife, gorges, and geothermal vents', duration: '3-4 hours', iconName: 'Bike', cost: '$30 entry + $10 bike hire' },
+      { name: 'Crescent Island Walk', description: 'Walk among zebras, giraffes, and wildebeest - no predators', duration: '2 hours', iconName: 'Footprints', cost: '~$30–$50 pp' },
       { name: 'Bird Watching', description: 'World-class birding with 400+ species recorded', duration: '2-3 hours', iconName: 'Camera' },
       { name: 'Geothermal Spa', description: 'Natural hot springs and spa experience at Olkaria', duration: '2-3 hours', iconName: 'Sun' },
       { name: 'Rock Climbing', description: 'Climb Fischer\'s Tower and Hell\'s Gate gorges', duration: 'Half day', iconName: 'Mountain' },
@@ -330,10 +412,24 @@ export const destinationsData: Record<string, DestinationData> = {
   'diani-beach': {
     slug: 'diani-beach',
     name: 'Diani Beach',
-    tagline: 'Kenya\'s Tropical Paradise',
+    tagline: 'The Pristine Swahili Coast',
     heroImage: dianiBeach,
     gallery: [dianiOcean, dianiResort, dianiSnorkeling, dianiBeach],
     category: 'beach',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'Dec–March, July–October',
+      idealFor: 'Honeymooners',
+      recommendedStay: '4–7 Nights',
+    },
+    pricing2026: {
+      budget: '$80–$150 pppn',
+      midRange: '$200–$450 pppn',
+      luxury: '$600–$1,500+ pppn',
+    },
+    signatureSighting: 'Whale Sharks (seasonal, Nov–Feb) and vibrant coral reefs',
+    viewingProbability: 'Good',
+    insiderTip: 'All-inclusive resorts offer the best value for mid-range travelers (~$250 pppn).',
     description: 'Diani Beach is Kenya\'s premier beach destination, featuring 17km of pristine white sands, turquoise waters, and vibrant coral reefs. Perfect for combining a safari adventure with a relaxing beach holiday, offering world-class diving, water sports, and Swahili coastal culture.',
     history: 'The area has been a trading post for centuries, with Arab, Portuguese, and Swahili influences visible in the nearby old town of Mombasa. The name "Diani" comes from the Digo people who inhabited the area. Today, it\'s East Africa\'s most popular beach resort area, consistently voted Africa\'s Leading Beach Destination.',
     wildlife: [
@@ -345,11 +441,12 @@ export const destinationsData: Record<string, DestinationData> = {
       { name: 'Sea Turtles', description: 'Green and hawksbill turtles nest on the beaches', bestTime: 'Year-round' },
     ],
     activities: [
-      { name: 'Snorkeling', description: 'Explore vibrant coral reefs teeming with tropical fish', duration: '2-3 hours', iconName: 'Camera' },
+      { name: 'Snorkeling', description: 'Explore vibrant coral reefs teeming with tropical fish', duration: '2-3 hours', iconName: 'Camera', cost: '~$50–$100 pp' },
       { name: 'Scuba Diving', description: 'Discover underwater caves, wrecks, and pristine reefs', duration: 'Half day', iconName: 'Binoculars' },
       { name: 'Kite Surfing', description: 'World-class conditions with consistent winds', duration: '2-3 hours', iconName: 'Wind' },
       { name: 'Shimba Hills Safari', description: 'Day trip to see sable antelope and elephants', duration: 'Full day', iconName: 'Car' },
       { name: 'Kisite Marine Park', description: 'Snorkel with dolphins in protected marine reserve', duration: 'Full day', iconName: 'Fish' },
+      { name: 'Skydiving', description: 'Tandem skydiving with coastal views', duration: '2 hours', iconName: 'Plane', cost: '~$400 pp' },
       { name: 'Dhow Cruise', description: 'Traditional sailing boat sunset cruise', duration: '3 hours', iconName: 'Ship' },
     ],
     bestTime: {
@@ -397,10 +494,26 @@ export const destinationsData: Record<string, DestinationData> = {
   'tsavo': {
     slug: 'tsavo',
     name: 'Tsavo',
-    tagline: 'Kenya\'s Largest Wilderness - Land of the Red Elephants',
+    tagline: 'The Theater of the Wild',
     heroImage: tsavo,
     gallery: [tsavo],
     category: 'safari',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'June–October, Jan–Feb',
+      idealFor: 'Adventure seekers',
+      recommendedStay: '3–4 Nights',
+    },
+    pricing2026: {
+      budget: '$150–$280 pppn',
+      midRange: '$350–$600 pppn',
+      luxury: '$700–$1,300 pppn',
+    },
+    tripCost: '4 Days: Budget ~$1,400 | Mid-Range ~$2,500 | Luxury ~$4,000+',
+    parkFees: '~$80 per day',
+    signatureSighting: 'Red-dusted elephants bathing in the Galana River or Mzima Springs',
+    viewingProbability: 'Good',
+    insiderTip: 'Park entry fees are ~$80 per day. Tsavo West is more scenic; Tsavo East has better visibility.',
     description: 'Tsavo is Kenya\'s largest protected area, comprising Tsavo East and Tsavo West national parks covering over 20,000 km². This vast wilderness is famous for its red elephants (dusted with the distinctive red soil), the Man-Eaters of Tsavo legend, and dramatic volcanic landscapes including the Shetani Lava Flow.',
     history: 'The parks were established in 1948 and named after the Tsavo River. Tsavo gained international notoriety in 1898 when two maneless lions killed 135 railway workers during the construction of the Kenya-Uganda Railway. The "Man-Eaters of Tsavo" story was immortalized in the film "The Ghost and the Darkness." Today, the parks protect one of Africa\'s largest elephant populations.',
     wildlife: [
@@ -460,10 +573,25 @@ export const destinationsData: Record<string, DestinationData> = {
   'laikipia': {
     slug: 'laikipia',
     name: 'Laikipia Plateau',
-    tagline: 'Africa\'s Conservation Success Story',
+    tagline: 'The Conservation Frontier',
     heroImage: laikipia,
     gallery: [laikipia],
     category: 'safari',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'June–October, Dec–March',
+      idealFor: 'Conservationists',
+      recommendedStay: '3–4 Nights',
+    },
+    pricing2026: {
+      budget: '$250–$450 pppn',
+      midRange: '$550–$900 pppn',
+      luxury: '$1,200–$3,000+ pppn',
+    },
+    tripCost: '4 Days: Budget ~$1,800 | Mid-Range ~$3,500 | Luxury ~$6,500+',
+    signatureSighting: 'The last two Northern White Rhinos at Ol Pejeta Conservancy',
+    viewingProbability: 'Excellent',
+    insiderTip: 'Private conservancy fees (e.g., Lewa, Ol Pejeta) range from $100–$150 pppn.',
     description: 'The Laikipia Plateau is Kenya\'s premier conservation destination and a remarkable success story of community and private conservancies working together. This vast mosaic of ranches and wildlife sanctuaries has the second-highest wildlife density in Kenya after the Maasai Mara, including the last viable population of African wild dogs.',
     history: 'Laikipia\'s conservation model evolved from colonial-era cattle ranches in the 1970s-80s when landowners began integrating wildlife with livestock. Today, the Laikipia ecosystem covers over 9,500 km² of mixed-use land where cattle, people, and wildlife coexist. It\'s home to Ol Pejeta Conservancy, the largest black rhino sanctuary in East Africa.',
     wildlife: [
@@ -523,10 +651,25 @@ export const destinationsData: Record<string, DestinationData> = {
   'lake-nakuru': {
     slug: 'lake-nakuru',
     name: 'Lake Nakuru',
-    tagline: 'The Pink Lake - Flamingos & Rhino Sanctuary',
+    tagline: 'The Birdwatcher\'s Paradise',
     heroImage: lakeNakuru,
     gallery: [lakeNakuru],
     category: 'rift-valley',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'June–March',
+      idealFor: 'Bird watchers, Rhino enthusiasts',
+      recommendedStay: '1–2 Nights',
+    },
+    pricing2026: {
+      budget: '$150–$250 pppn',
+      midRange: '$300–$550 pppn',
+      luxury: '$600–$1,000 pppn',
+    },
+    parkFees: '~$70–$100 per day for international tourists',
+    signatureSighting: 'A "pink lake" created by thousands of flamingos',
+    viewingProbability: 'Excellent',
+    insiderTip: 'One of the most reliable places to see Black Rhinos in Kenya.',
     description: 'Lake Nakuru National Park is a compact gem in Kenya\'s Great Rift Valley, famous for its spectacular flamingo gatherings, successful rhino sanctuary, and easy accessibility from Nairobi. The park\'s diverse habitats support an incredible variety of wildlife including the endangered Rothschild\'s giraffe.',
     history: 'Lake Nakuru was designated a national park in 1961, initially to protect the flamingos and aquatic environment. In the 1980s, it became a rhino sanctuary and has been crucial in rebuilding Kenya\'s rhino population. The lake\'s alkaline waters support massive algae blooms that attract millions of flamingos seasonally.',
     wildlife: [
@@ -586,10 +729,26 @@ export const destinationsData: Record<string, DestinationData> = {
   'mount-kenya': {
     slug: 'mount-kenya',
     name: 'Mount Kenya',
-    tagline: 'Africa\'s Second Highest Peak - Adventure & Wildlife',
+    tagline: 'The Celestial Peak',
     heroImage: mountKenya,
     gallery: [mountKenya],
     category: 'adventure',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'Jan–March, July–October',
+      idealFor: 'Trekkers',
+      recommendedStay: '4–6 Nights',
+    },
+    pricing2026: {
+      budget: '$150–$250 pppn',
+      midRange: '$300–$500 pppn',
+      luxury: '$600–$1,000 pppn',
+    },
+    tripCost: 'Standard Trek: $850–$1,200 (4–5 days) | Luxury Trek: $1,500–$2,500 (6 days)',
+    parkFees: '~$52 per day for international adults',
+    signatureSighting: 'Sunrise from Point Lenana (4,985m)',
+    viewingProbability: 'Rare',
+    insiderTip: 'The Sirimon-Chogoria Traverse is the most scenic route ($1,100–$1,600 avg).',
     description: 'Mount Kenya is Africa\'s second-highest mountain and a UNESCO World Heritage Site, offering dramatic scenery from glaciers to tropical rainforests. The Mount Kenya National Park protects diverse ecosystems and unique wildlife while providing trekking adventures for all skill levels.',
     history: 'Called "Kirinyaga" (mountain of whiteness) by the Kikuyu people, Mount Kenya has been sacred for centuries. The first European to reach the summit was Halford Mackinder in 1899. The national park was established in 1949 and declared a UNESCO World Heritage Site in 1997 for its outstanding natural beauty and ecological importance.',
     wildlife: [
@@ -649,10 +808,24 @@ export const destinationsData: Record<string, DestinationData> = {
   'lamu': {
     slug: 'lamu',
     name: 'Lamu Island',
-    tagline: 'Kenya\'s Swahili Coast Jewel - A Step Back in Time',
+    tagline: 'The Timeless Swahili Sanctuary',
     heroImage: lamu,
     gallery: [lamu],
     category: 'beach',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'December–March',
+      idealFor: 'Culture seekers',
+      recommendedStay: '3–5 Nights',
+    },
+    pricing2026: {
+      budget: '$60–$120 pppn',
+      midRange: '$150–$350 pppn',
+      luxury: '$500–$1,200 pppn',
+    },
+    signatureSighting: 'Traditional sailing dhows at sunset',
+    viewingProbability: 'Moderate',
+    insiderTip: 'Stay in Shela Village for a quieter, more upscale beach experience.',
     description: 'Lamu is Kenya\'s oldest continuously inhabited town and a UNESCO World Heritage Site, preserving 700 years of Swahili culture. This car-free island offers pristine beaches, traditional dhow sailing, and an authentic glimpse into East Africa\'s rich coastal heritage.',
     history: 'Founded in the 14th century, Lamu was a major center of the East African slave and ivory trade, and later became a hub for Swahili culture, architecture, and Islamic learning. The old town has barely changed in centuries, with its narrow streets, carved wooden doors, and distinctive Swahili architecture.',
     wildlife: [
@@ -664,12 +837,12 @@ export const destinationsData: Record<string, DestinationData> = {
       { name: 'Cats', description: 'Famous Lamu cats descended from Persian traders\' companions', bestTime: 'Year-round' },
     ],
     activities: [
-      { name: 'Dhow Cruise', description: 'Traditional sailing on wooden boats with lunch', duration: 'Half day', iconName: 'Ship' },
-      { name: 'Old Town Walk', description: 'Explore narrow streets, museums, and mosques', duration: '2-3 hours', iconName: 'Home' },
+      { name: 'Dhow Sunset Cruise', description: 'Traditional sailing on wooden boats with drinks', duration: '2 hours', iconName: 'Ship', cost: '~$30–$60 pp' },
+      { name: 'Guided Town Tour', description: 'Explore narrow streets, museums, and mosques', duration: '2-3 hours', iconName: 'Home', cost: '~$20 pp' },
       { name: 'Shela Beach', description: 'Relax on 12km of pristine white sand', duration: 'Full day', iconName: 'Sun' },
       { name: 'Snorkeling', description: 'Discover coral reefs and marine life', duration: '2-3 hours', iconName: 'Fish' },
       { name: 'Swahili Cooking Class', description: 'Learn traditional coastal cuisine', duration: '3 hours', iconName: 'Utensils' },
-      { name: 'Sunset Cruise', description: 'Evening dhow sail with drinks and music', duration: '2 hours', iconName: 'Sun' },
+      { name: 'Full-Day Dhow Cruise', description: 'Full day sailing with lunch and island hopping', duration: 'Full day', iconName: 'Ship', cost: '~$60–$100 pp' },
     ],
     bestTime: {
       peak: ['December', 'January', 'February', 'March'],
@@ -727,7 +900,7 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'maasai-mara',
     name: 'Maasai Mara',
-    tagline: 'Home of the Great Migration',
+    tagline: 'The Crown Jewel of African Safaris',
     image: maraLodge,
     highlights: ['Great Migration', 'Big Five', 'Big Cats'],
     bestTime: 'Jul - Oct',
@@ -737,7 +910,7 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'amboseli',
     name: 'Amboseli',
-    tagline: 'Land of Giants with Kilimanjaro Views',
+    tagline: 'Land of the Giants',
     image: amboseli,
     highlights: ['Elephant Herds', 'Mt. Kilimanjaro', 'Bird Watching'],
     bestTime: 'Jun - Oct',
@@ -747,17 +920,17 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'samburu',
     name: 'Samburu',
-    tagline: 'Where the Wild North Begins',
+    tagline: 'The Arid Frontier',
     image: samburu,
     highlights: ['Samburu Special Five', 'Cultural Experience', 'Leopards'],
-    bestTime: 'Jul - Oct',
+    bestTime: 'Jun - Oct',
     wildlife: "Grevy's Zebra, Reticulated Giraffe, Gerenuk",
     category: 'safari',
   },
   {
     slug: 'tsavo',
     name: 'Tsavo',
-    tagline: 'Land of the Red Elephants',
+    tagline: 'The Theater of the Wild',
     image: tsavo,
     highlights: ['Red Elephants', 'Man-Eaters Legacy', 'Mzima Springs'],
     bestTime: 'Jun - Oct',
@@ -767,10 +940,10 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'laikipia',
     name: 'Laikipia Plateau',
-    tagline: 'Africa\'s Conservation Success',
+    tagline: 'The Conservation Frontier',
     image: laikipia,
     highlights: ['Wild Dogs', 'Rhino Tracking', 'Walking Safaris'],
-    bestTime: 'Jul - Oct',
+    bestTime: 'Jun - Oct',
     wildlife: "Wild Dogs, Rhinos, Grevy's Zebra, Elephants",
     category: 'safari',
   },
@@ -778,20 +951,20 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'lake-naivasha',
     name: 'Lake Naivasha',
-    tagline: 'A Freshwater Paradise',
+    tagline: 'The Serene Freshwater Oasis',
     image: naivasha,
     highlights: ['Boat Safaris', 'Hell\'s Gate', 'Bird Watching'],
-    bestTime: 'Jun - Sep',
+    bestTime: 'Year-round',
     wildlife: 'Hippos, Fish Eagles, Giraffes',
     category: 'rift-valley',
   },
   {
     slug: 'lake-nakuru',
     name: 'Lake Nakuru',
-    tagline: 'The Pink Lake',
+    tagline: 'The Birdwatcher\'s Paradise',
     image: lakeNakuru,
     highlights: ['Flamingos', 'Rhino Sanctuary', "Rothschild's Giraffe"],
-    bestTime: 'Jun - Sep',
+    bestTime: 'Jun - Mar',
     wildlife: 'Flamingos, Rhinos, Lions, Pelicans',
     category: 'rift-valley',
   },
@@ -799,10 +972,10 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'mount-kenya',
     name: 'Mount Kenya',
-    tagline: 'Africa\'s Second Highest Peak',
+    tagline: 'The Celestial Peak',
     image: mountKenya,
     highlights: ['Peak Climbing', 'Forest Treks', 'Unique Wildlife'],
-    bestTime: 'Jan - Feb, Jul - Sep',
+    bestTime: 'Jan - Mar, Jul - Oct',
     wildlife: 'Forest Elephants, Giant Forest Hogs, Colobus',
     category: 'adventure',
   },
@@ -810,17 +983,17 @@ export const destinationPreviews: DestinationPreview[] = [
   {
     slug: 'diani-beach',
     name: 'Diani Beach',
-    tagline: "Kenya's Tropical Paradise",
+    tagline: 'The Pristine Swahili Coast',
     image: dianiBeach,
     highlights: ['Beach & Safari', 'Snorkeling', 'Marine Life'],
-    bestTime: 'Dec - Mar',
+    bestTime: 'Dec - Mar, Jul - Oct',
     wildlife: 'Dolphins, Sea Turtles, Colobus Monkeys',
     category: 'beach',
   },
   {
     slug: 'lamu',
     name: 'Lamu Island',
-    tagline: 'UNESCO Swahili Heritage',
+    tagline: 'The Timeless Swahili Sanctuary',
     image: lamu,
     highlights: ['Swahili Culture', 'Dhow Sailing', 'Pristine Beaches'],
     bestTime: 'Dec - Mar',
