@@ -338,8 +338,8 @@ const Footer = () => {
                         <MapPin className="w-4 h-4 text-primary" />
                       </div>
                       <p className="text-sm text-white/60 leading-relaxed">
-341:                         Kamakis, Nairobi, Kenya
-342:                       </p>
+                        Kamakis, Nairobi, Kenya
+                      </p>
                     </div>
                   </li>
                   <li className="group">
