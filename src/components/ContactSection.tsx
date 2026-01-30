@@ -104,7 +104,7 @@ const ContactSection = () => {
       icon: Phone,
       title: 'Call Us',
       content: '+254 722 792 069 / +254 732 017 425',
-      href: 'tel:+254732017425',
+      href: 'tel:+254722792069',
     },
     {
       icon: Mail,
