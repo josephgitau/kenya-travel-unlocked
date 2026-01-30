@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { 
   ArrowRight, MapPin, Clock, Star, Users, Sun, CloudRain, Camera, Binoculars, 
   Home, Utensils, Car, Plane, Moon, Mountain, Fish, Ship, Footprints, Wind, 
@@ -210,6 +211,11 @@ const SectionHeader = ({ label, title, subtitle }: { label: string; title: strin
 const DestinationGuide = () => {
   const { destinationSlug } = useParams<{ destinationSlug: string }>();
   const { data: packages } = usePackages();
+
+  // Scroll to top when destination changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [destinationSlug]);
 
   const destination = destinationSlug ? destinationsData[destinationSlug] : null;
 
