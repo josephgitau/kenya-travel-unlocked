@@ -149,7 +149,7 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+254722792069"
+              href="tel:+254732017425"
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-muted ${
                 isScrolled || !isHomePage ? 'text-foreground' : 'text-white'
               }`}
@@ -157,7 +157,7 @@ const Header = () => {
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Phone className="w-4 h-4 text-primary" />
               </div>
-              <span className="hidden xl:inline">+254 722 792 069</span>
+              <span className="hidden xl:inline">+254 732 017 425</span>
             </a>
             <Link 
               to="/quote"
@@ -218,7 +218,7 @@ const Header = () => {
             
             <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/50">
               <a
-                href="tel:+254722792069"
+                href="tel:+254732017425"
                 className="flex items-center gap-2 flex-1 justify-center py-3 bg-muted rounded-full text-foreground font-medium"
               >
                 <Phone className="w-4 h-4 text-primary" />

@@ -352,6 +352,9 @@ const Footer = () => {
                         <a href="tel:+254722792069" className="text-sm text-white/60 hover:text-primary transition-colors block">
                           +254 722 792 069
                         </a>
+                        <a href="tel:+254732017425" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          +254 732 017 425
+                        </a>
                       </div>
                     </div>
                   </li>
