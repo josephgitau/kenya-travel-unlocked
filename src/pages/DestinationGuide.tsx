@@ -15,6 +15,7 @@ import SEO from '@/components/SEO';
 import { usePackages } from '@/hooks/usePackages';
 import { destinationsData, destinationPreviews } from '@/data/destinations';
 import { Badge } from '@/components/ui/badge';
+import { WildlifeIcon } from '@/components/WildlifeIcon';
 
 // Icon mapping for activities
 const iconMap: Record<string, React.ReactNode> = {
@@ -415,7 +416,6 @@ const DestinationGuide = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {destination.wildlife.map((animal, index) => {
                 const probability = getViewingProbability(animal.bestTime);
-                const emoji = getWildlifeEmoji(animal.name);
                 const isSignature = index === 0;
                 
                 return (
@@ -438,11 +438,16 @@ const DestinationGuide = () => {
                     )}
                     
                     <div className="flex items-start gap-4">
-                      {/* Emoji Icon */}
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl ${
-                        isSignature ? 'bg-primary/20' : 'bg-gradient-to-br from-primary/15 to-safari/10'
+                      {/* Animated Wildlife Icon */}
+                      <div className={`shrink-0 ${
+                        isSignature ? 'scale-110' : ''
                       }`}>
-                        {emoji}
+                        <WildlifeIcon 
+                          name={animal.name} 
+                          size="lg" 
+                          animate={true}
+                          className={isSignature ? 'ring-2 ring-primary/30 ring-offset-2 ring-offset-card' : ''}
+                        />
                       </div>
                       
                       <div className="flex-1 min-w-0">
