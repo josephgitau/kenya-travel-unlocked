@@ -13,7 +13,7 @@ interface SEOProps {
 const defaultSEO = {
   title: 'Awili Safaris | Experience Kenya From Bush to Beach',
   description: 'Discover unforgettable safari experiences in Kenya. From the Maasai Mara to Diani Beach, book your dream African adventure with Kenya\'s most trusted tour operator.',
-  keywords: 'Kenya safari, Maasai Mara, Diani Beach, African safari, Kenya tours, wildlife safari, Amboseli, Samburu, Kenya holiday packages, safari packages Kenya, Awili Safaris',
+  keywords: 'Kenya safari, Maasai Mara, Diani Beach, African safari, Kenya tours, wildlife safari, Amboseli, Samburu, Nairobi National Park, Kenya holiday packages, safari packages Kenya, Awili Safaris',
   image: '/og-image.jpg',
   url: 'https://awilisafaris.co.ke',
 };

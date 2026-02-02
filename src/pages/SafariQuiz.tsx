@@ -57,9 +57,9 @@ const quizQuestions: QuizQuestion[] = [
     multiSelect: true,
     category: "Wildlife",
     options: [
-      { id: 'big5', label: 'The Big Five', emoji: '🦁', description: 'Lion, Elephant, Buffalo, Leopard, Rhino', tags: ['Big Five', 'Maasai Mara', 'Amboseli', 'wildlife'] },
-      { id: 'elephants', label: 'Elephant Herds', emoji: '🐘', description: 'Giants with Kilimanjaro backdrop', tags: ['elephants', 'Amboseli', 'Tsavo'] },
-      { id: 'cats', label: 'Big Cats Only', emoji: '🐆', description: 'Lions, cheetahs hunting on the plains', tags: ['big cats', 'Maasai Mara', 'predators'] },
+      { id: 'big5', label: 'The Big Five', emoji: '🦁', description: 'Lion, Elephant, Buffalo, Leopard, Rhino', tags: ['Big Five', 'Maasai Mara', 'Amboseli', 'Nairobi National Park', 'wildlife'] },
+      { id: 'elephants', label: 'Elephant Herds', emoji: '🐘', description: 'Giants with Kilimanjaro backdrop', tags: ['elephants', 'Amboseli', 'Tsavo', 'Nairobi National Park'] },
+      { id: 'cats', label: 'Big Cats Only', emoji: '🐆', description: 'Lions, cheetahs hunting on the plains', tags: ['big cats', 'Maasai Mara', 'Nairobi National Park', 'predators'] },
       { id: 'unique', label: 'Rare & Unique', emoji: '🦒', description: "Grevy's zebra, gerenuk, wild dogs", tags: ['rare', 'Samburu', 'Laikipia', 'wild dogs'] },
     ],
   },

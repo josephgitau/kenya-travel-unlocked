@@ -19,8 +19,8 @@ const Destinations = () => {
     <div className="min-h-screen bg-background pt-16 lg:pt-20">
       <SEO 
         title="Kenya Safari Destinations | Awili Safaris Guides"
-        description="Explore in-depth guides to Kenya's top safari destinations. Discover Maasai Mara, Amboseli, Samburu, Tsavo, Laikipia, and coastal paradises with insider tips."
-        keywords="Kenya destinations, Maasai Mara guide, Amboseli guide, Samburu safari, Tsavo, Laikipia, Kenya safari destinations"
+        description="Explore in-depth guides to Kenya's top safari destinations. Discover Maasai Mara, Amboseli, Nairobi National Park, Samburu, Tsavo, Laikipia, and coastal paradises with insider tips."
+        keywords="Kenya destinations, Maasai Mara guide, Amboseli guide, Nairobi National Park, Samburu safari, Tsavo, Laikipia, Kenya safari destinations"
       />
       <Header />
 
