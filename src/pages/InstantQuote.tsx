@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Calendar, Users, User, Minus, Plus, Home, Plane, Camera, Loader2, Check, Info, Star } from 'lucide-react';
+import { Calendar, Users, User, Minus, Plus, Home, Plane, Camera, Loader2, Check, Info, Star, Anchor, Bird, Baby, Utensils, Compass, Mountain } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,6 +10,7 @@ import { usePackages } from '@/hooks/usePackages';
 import { format, addDays } from 'date-fns';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+
 interface AddOn {
   id: string;
   name: string;
@@ -17,16 +18,20 @@ interface AddOn {
   priceResident: number;
   priceNonResident: number;
   icon: React.ReactNode;
+  locations: string[]; // Which package locations this add-on applies to
 }
 
-const addOns: AddOn[] = [
+// Location-specific add-ons
+const allAddOns: AddOn[] = [
+  // Safari/Bush add-ons
   {
-    id: 'balloon',
+    id: 'balloon-mara',
     name: 'Hot Air Balloon Safari',
     description: 'Sunrise flight over the Mara with champagne breakfast',
     priceResident: 35000,
     priceNonResident: 450,
     icon: <Plane className="w-5 h-5" />,
+    locations: ['Maasai Mara'],
   },
   {
     id: 'photography',
@@ -35,6 +40,7 @@ const addOns: AddOn[] = [
     priceResident: 15000,
     priceNonResident: 150,
     icon: <Camera className="w-5 h-5" />,
+    locations: ['Maasai Mara', 'Amboseli', 'Samburu', 'Nairobi', 'Lake Naivasha'],
   },
   {
     id: 'upgrade',
@@ -43,14 +49,147 @@ const addOns: AddOn[] = [
     priceResident: 25000,
     priceNonResident: 300,
     icon: <Home className="w-5 h-5" />,
+    locations: ['Maasai Mara', 'Amboseli', 'Samburu', 'Diani'],
   },
   {
     id: 'extension',
     name: 'Extra Day Extension',
-    description: 'Add an extra day to your safari',
+    description: 'Add an extra day to your adventure',
     priceResident: 20000,
     priceNonResident: 250,
     icon: <Calendar className="w-5 h-5" />,
+    locations: ['Maasai Mara', 'Amboseli', 'Samburu', 'Diani', 'Lake Naivasha'],
+  },
+  // Beach-specific add-ons
+  {
+    id: 'snorkeling',
+    name: 'Snorkeling & Marine Safari',
+    description: 'Explore coral reefs and swim with tropical fish',
+    priceResident: 8000,
+    priceNonResident: 75,
+    icon: <Anchor className="w-5 h-5" />,
+    locations: ['Diani'],
+  },
+  {
+    id: 'dolphin',
+    name: 'Dolphin Watching Trip',
+    description: 'Morning boat trip to spot dolphins in Wasini',
+    priceResident: 12000,
+    priceNonResident: 120,
+    icon: <Compass className="w-5 h-5" />,
+    locations: ['Diani'],
+  },
+  {
+    id: 'spa',
+    name: 'Spa & Wellness Package',
+    description: 'Full-day spa treatment with ocean views',
+    priceResident: 18000,
+    priceNonResident: 180,
+    icon: <Home className="w-5 h-5" />,
+    locations: ['Diani'],
+  },
+  // Nairobi-specific add-ons
+  {
+    id: 'sheldrick',
+    name: 'Sheldrick Wildlife Trust',
+    description: 'Visit baby elephants at the famous orphanage',
+    priceResident: 2500,
+    priceNonResident: 50,
+    icon: <Baby className="w-5 h-5" />,
+    locations: ['Nairobi'],
+  },
+  {
+    id: 'giraffe',
+    name: 'Giraffe Centre Visit',
+    description: 'Hand-feed endangered Rothschild giraffes',
+    priceResident: 1500,
+    priceNonResident: 20,
+    icon: <Bird className="w-5 h-5" />,
+    locations: ['Nairobi'],
+  },
+  {
+    id: 'karen',
+    name: 'Karen Blixen Museum',
+    description: 'Explore the famous "Out of Africa" homestead',
+    priceResident: 1200,
+    priceNonResident: 15,
+    icon: <Home className="w-5 h-5" />,
+    locations: ['Nairobi'],
+  },
+  {
+    id: 'carnivore',
+    name: 'Carnivore Restaurant Dinner',
+    description: 'Famous Kenyan nyama choma dining experience',
+    priceResident: 5000,
+    priceNonResident: 60,
+    icon: <Utensils className="w-5 h-5" />,
+    locations: ['Nairobi'],
+  },
+  // Lake Naivasha add-ons
+  {
+    id: 'boat-ride',
+    name: 'Lake Boat Safari',
+    description: 'Scenic boat ride with hippo & bird watching',
+    priceResident: 4000,
+    priceNonResident: 40,
+    icon: <Anchor className="w-5 h-5" />,
+    locations: ['Lake Naivasha'],
+  },
+  {
+    id: 'crescent',
+    name: 'Crescent Island Walk',
+    description: 'Walking safari among zebras and giraffes',
+    priceResident: 3500,
+    priceNonResident: 35,
+    icon: <Compass className="w-5 h-5" />,
+    locations: ['Lake Naivasha'],
+  },
+  {
+    id: 'hells-gate',
+    name: "Hell's Gate Cycling",
+    description: 'Cycle through dramatic gorges & hot springs',
+    priceResident: 5000,
+    priceNonResident: 50,
+    icon: <Mountain className="w-5 h-5" />,
+    locations: ['Lake Naivasha'],
+  },
+  // Amboseli add-ons
+  {
+    id: 'sundowner',
+    name: 'Bush Sundowner Experience',
+    description: 'Sunset cocktails with Kilimanjaro views',
+    priceResident: 8000,
+    priceNonResident: 80,
+    icon: <Compass className="w-5 h-5" />,
+    locations: ['Amboseli'],
+  },
+  {
+    id: 'maasai-village',
+    name: 'Maasai Village Visit',
+    description: 'Cultural immersion with local Maasai community',
+    priceResident: 3500,
+    priceNonResident: 40,
+    icon: <Users className="w-5 h-5" />,
+    locations: ['Amboseli', 'Maasai Mara'],
+  },
+  // Samburu add-ons
+  {
+    id: 'camel-trek',
+    name: 'Camel Safari Trek',
+    description: 'Unique camel-back game viewing experience',
+    priceResident: 10000,
+    priceNonResident: 100,
+    icon: <Compass className="w-5 h-5" />,
+    locations: ['Samburu'],
+  },
+  {
+    id: 'samburu-culture',
+    name: 'Samburu Cultural Visit',
+    description: 'Meet the colorful Samburu warriors',
+    priceResident: 3000,
+    priceNonResident: 35,
+    icon: <Users className="w-5 h-5" />,
+    locations: ['Samburu'],
   },
 ];
 
@@ -65,6 +204,23 @@ const InstantQuote = () => {
   
 
   const selectedPkg = packages?.find((p) => p.id === selectedPackage);
+
+  // Filter add-ons based on selected package location
+  const availableAddOns = useMemo(() => {
+    if (!selectedPkg) return [];
+    
+    const location = selectedPkg.location.toLowerCase();
+    
+    return allAddOns.filter(addOn => 
+      addOn.locations.some(loc => location.includes(loc.toLowerCase()))
+    );
+  }, [selectedPkg]);
+
+  // Clear selected add-ons when package changes
+  const handlePackageChange = (packageId: string) => {
+    setSelectedPackage(packageId);
+    setSelectedAddOns([]); // Reset add-ons when package changes
+  };
 
   const toggleAddOn = (addOnId: string) => {
     if (selectedAddOns.includes(addOnId)) {
@@ -99,7 +255,7 @@ const InstantQuote = () => {
     const childTotal = children * basePrice * (1 - childDiscount);
 
     const addOnsTotal = selectedAddOns.reduce((total, addOnId) => {
-      const addOn = addOns.find((a) => a.id === addOnId);
+      const addOn = allAddOns.find((a) => a.id === addOnId);
       if (addOn) {
         const addOnPrice = isResident ? addOn.priceResident : addOn.priceNonResident;
         return total + addOnPrice * (adults + children);
@@ -175,10 +331,10 @@ const InstantQuote = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {packages?.slice(0, 6).map((pkg) => (
+                  {packages?.map((pkg) => (
                     <button
                       key={pkg.id}
-                      onClick={() => setSelectedPackage(pkg.id)}
+                      onClick={() => handlePackageChange(pkg.id)}
                       className={`p-4 rounded-2xl border-2 text-left transition-all ${
                         selectedPackage === pkg.id
                           ? 'border-primary bg-primary/5'
@@ -318,53 +474,77 @@ const InstantQuote = () => {
                 </div>
               </div>
 
-              {/* Step 3: Add-ons */}
-              <div className="bg-card rounded-3xl p-6 lg:p-8 shadow-card border border-border">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                    3
+              {/* Step 3: Add-ons (only show when package selected) */}
+              {selectedPkg && availableAddOns.length > 0 && (
+                <div className="bg-card rounded-3xl p-6 lg:p-8 shadow-card border border-border">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+                      3
+                    </div>
+                    <div>
+                      <h2 className="font-display text-xl font-bold text-foreground">
+                        Enhance Your Experience
+                      </h2>
+                      <p className="text-sm text-muted-foreground">
+                        Add-ons for {selectedPkg.location}
+                      </p>
+                    </div>
                   </div>
-                  <h2 className="font-display text-xl font-bold text-foreground">
-                    Enhance Your Experience
-                  </h2>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {addOns.map((addOn) => (
-                    <button
-                      key={addOn.id}
-                      onClick={() => toggleAddOn(addOn.id)}
-                      className={`p-4 rounded-2xl border-2 text-left transition-all ${
-                        selectedAddOns.includes(addOn.id)
-                          ? 'border-primary bg-primary/5'
-                          : 'border-border hover:border-primary/50'
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {availableAddOns.map((addOn) => (
+                      <button
+                        key={addOn.id}
+                        onClick={() => toggleAddOn(addOn.id)}
+                        className={`p-4 rounded-2xl border-2 text-left transition-all ${
                           selectedAddOns.includes(addOn.id)
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-muted text-muted-foreground'
-                        }`}>
-                          {addOn.icon}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between">
-                            <h3 className="font-semibold text-foreground">{addOn.name}</h3>
-                            {selectedAddOns.includes(addOn.id) && (
-                              <Check className="w-5 h-5 text-primary shrink-0" />
-                            )}
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                            selectedAddOns.includes(addOn.id)
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-muted text-muted-foreground'
+                          }`}>
+                            {addOn.icon}
                           </div>
-                          <p className="text-sm text-muted-foreground mb-2">{addOn.description}</p>
-                          <p className="text-sm font-semibold text-primary">
-                            +{formatPrice(isResident ? addOn.priceResident : addOn.priceNonResident)}/person
-                          </p>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between">
+                              <h3 className="font-semibold text-foreground">{addOn.name}</h3>
+                              {selectedAddOns.includes(addOn.id) && (
+                                <Check className="w-5 h-5 text-primary shrink-0" />
+                              )}
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-2">{addOn.description}</p>
+                            <p className="text-sm font-semibold text-primary">
+                              +{formatPrice(isResident ? addOn.priceResident : addOn.priceNonResident)}/person
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Placeholder when no package selected */}
+              {!selectedPkg && (
+                <div className="bg-card rounded-3xl p-6 lg:p-8 shadow-card border border-border">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground font-bold">
+                      3
+                    </div>
+                    <h2 className="font-display text-xl font-bold text-muted-foreground">
+                      Enhance Your Experience
+                    </h2>
+                  </div>
+                  <p className="text-muted-foreground text-sm text-center py-8">
+                    Select a package above to see available add-ons for your destination
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Quote Summary */}
