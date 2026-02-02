@@ -601,8 +601,8 @@ const DestinationGuide = () => {
           <div className="mb-20">
             <SectionHeader 
               label="Accommodation" 
-              title="Where to Stay"
-              subtitle="Hand-picked lodges and camps for every budget"
+              title="Recommended Lodges"
+              subtitle="Popular accommodation options — actual availability, pricing, and booking confirmation provided in your personalized quote"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {destination.lodges.map((lodge, index) => {
