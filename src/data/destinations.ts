@@ -25,6 +25,11 @@ import laikipia from '@/assets/laikipia.jpg';
 import lakeNakuru from '@/assets/lake-nakuru.jpg';
 import mountKenya from '@/assets/mount-kenya.jpg';
 import lamu from '@/assets/lamu.jpg';
+// Nairobi images
+import nairobiPark from '@/assets/nairobi-park.jpg';
+import nairobiElephants from '@/assets/nairobi-elephants.jpg';
+import nairobiGiraffe from '@/assets/nairobi-giraffe.jpg';
+import nairobiKaren from '@/assets/nairobi-karen.jpg';
 
 export interface PricingTier {
   budget: string;
@@ -46,7 +51,7 @@ export interface DestinationData {
   gallery: string[];
   description: string;
   history: string;
-  category: 'safari' | 'beach' | 'rift-valley' | 'adventure';
+  category: 'safari' | 'beach' | 'rift-valley' | 'adventure' | 'city';
   // New 2026 pricing and quick decision data
   quickDecision: QuickDecision;
   pricing2026: PricingTier;
@@ -93,6 +98,90 @@ export interface DestinationData {
 }
 
 export const destinationsData: Record<string, DestinationData> = {
+  // ==========================================
+  // NAIROBI - THE WILDLIFE CAPITAL
+  // ==========================================
+
+  'nairobi': {
+    slug: 'nairobi',
+    name: 'Nairobi',
+    tagline: "The World's Only Wildlife Capital",
+    heroImage: nairobiPark,
+    gallery: [nairobiPark, nairobiElephants, nairobiGiraffe, nairobiKaren],
+    category: 'city',
+    // 2026 Quick Decision & Pricing
+    quickDecision: {
+      bestTime: 'Year-round (Dry months best for park visibility)',
+      idealFor: 'Transit travelers, Families, First-timers',
+      recommendedStay: 'Half-day to 2 Days',
+    },
+    pricing2026: {
+      budget: '$50–$100 pppn',
+      midRange: '$150–$300 pppn',
+      luxury: '$450–$800+ pppn',
+    },
+    tripCost: '1-2 Days: Budget ~$100 | Mid-Range ~$200 | Luxury ~$500+',
+    parkFees: 'Nairobi National Park: ~$70 per day (International Adult)',
+    signatureSighting: 'Lions and rhinos grazing with the Nairobi city skyline in the background',
+    viewingProbability: 'Excellent',
+    insiderTip: 'Enter Nairobi National Park via the Main Gate early (6:00 AM) for the best predator sightings before the sun gets too high.',
+    description: "Nairobi is the world's only capital city with a national park within its boundaries. This vibrant metropolis offers a unique blend of urban sophistication and wildlife experiences, making it the perfect starting point for any Kenyan adventure. From rhinos with skyscrapers in the background to feeding endangered giraffes and visiting orphaned elephants, Nairobi delivers unforgettable wildlife encounters just minutes from the city center.",
+    history: "Named from the Maasai phrase 'Enkare Nairobi' meaning 'cool water', Nairobi was founded in 1899 as a railway depot on the Uganda Railway. It quickly grew into East Africa's most important city and became Kenya's capital upon independence in 1963. Today, Nairobi is a dynamic hub of culture, commerce, and conservation, home to over 4 million people and serving as the gateway to Kenya's world-famous safari destinations.",
+    wildlife: [
+      { name: 'Black Rhino', description: 'One of the best places in Kenya to see critically endangered black rhinos up close', bestTime: 'Year-round' },
+      { name: 'Lions', description: 'Nairobi National Park has a healthy lion population that can be seen with the city skyline backdrop', bestTime: 'Early morning' },
+      { name: 'Giraffes & Zebra', description: 'Common throughout Nairobi National Park and at the Giraffe Centre', bestTime: 'Year-round' },
+      { name: 'Orphaned Elephants', description: 'At the Sheldrick Wildlife Trust, see baby elephants being rehabilitated for release', bestTime: '11:00 AM daily' },
+      { name: 'Buffalo & Leopard', description: 'Present in the park, leopards are harder to spot', bestTime: 'Dawn/Dusk' },
+      { name: 'Over 400 Bird Species', description: 'Exceptional birdwatching in the park and at Karura Forest', bestTime: 'Year-round' },
+    ],
+    activities: [
+      { name: 'Nairobi National Park Safari', description: 'Game drive in the only national park within a capital city - see rhinos, lions, and giraffes against the city skyline', duration: '3-4 hours', iconName: 'Car', cost: '~$150 private vehicle' },
+      { name: 'Sheldrick Elephant Orphanage', description: 'Watch baby elephants being fed and playing during the public visiting hour', duration: '1 hour', iconName: 'Heart', cost: '~$15 entry + park fee' },
+      { name: 'Giraffe Centre', description: 'Hand-feed endangered Rothschild\'s giraffes from an elevated platform', duration: '1-2 hours', iconName: 'Camera', cost: '~$12 entry' },
+      { name: 'Karen Blixen Museum', description: "Visit the 'Out of Africa' author's historic farmhouse with views of Ngong Hills", duration: '1-2 hours', iconName: 'BookOpen', cost: '~$10 entry' },
+      { name: 'Karura Forest Walk', description: 'Hike or cycle through waterfalls and caves in Nairobi\'s green lung', duration: '2-3 hours', iconName: 'Trees', cost: '~$5 entry' },
+      { name: 'Bomas of Kenya', description: 'Experience traditional dances and homesteads from Kenya\'s 42 tribes', duration: '2-3 hours', iconName: 'Users', cost: '~$8 entry' },
+    ],
+    bestTime: {
+      peak: ['January', 'February', 'June', 'July', 'August', 'September'],
+      good: ['October', 'November', 'December'],
+      low: ['March', 'April', 'May'],
+    },
+    weather: {
+      dry: 'January to March, June to October',
+      wet: 'March to May (long rains), October to December (short rains)',
+      temp: '10°C - 26°C (50°F - 79°F) - pleasant year-round due to altitude',
+    },
+    lodges: [
+      { name: 'Giraffe Manor', type: 'Ultra-Luxury', description: 'Iconic boutique hotel where giraffes join you for breakfast at the window', priceRange: '$$$' },
+      { name: 'Hemingways Nairobi', type: 'Luxury', description: 'Elegant 5-star hotel in the Karen suburb with plantation-style architecture', priceRange: '$$$' },
+      { name: 'Villa Rosa Kempinski', type: 'Luxury', description: 'Premier city center hotel with world-class amenities', priceRange: '$$$' },
+      { name: 'Tamarind Tree Hotel', type: 'Mid-Range', description: 'Stylish hotel in Karen with excellent service and garden setting', priceRange: '$$' },
+      { name: 'Eka Hotel', type: 'Mid-Range', description: 'Modern international-standard hotel near JKIA airport', priceRange: '$$' },
+      { name: 'Wildebeest Eco Camp', type: 'Budget', description: 'Popular eco-friendly camp with great atmosphere for budget travelers', priceRange: '$' },
+    ],
+    tips: [
+      'Book Sheldrick Wildlife Trust visits online in advance - they fill up months ahead',
+      'Combine Giraffe Centre with Karen Blixen Museum and lunch at Karen Blixen Coffee Garden for a full day',
+      'Enter Nairobi National Park at 6:00 AM for best wildlife sightings and photography light',
+      'Bomas of Kenya afternoon shows (2:30 PM weekdays, 3:30 PM weekends) feature the best traditional performances',
+      'Use Uber or Bolt for safe, affordable transport around the city',
+    ],
+    facts: [
+      "Nairobi National Park is the world's only wildlife reserve within a capital city",
+      'The Sheldrick Trust has rescued and released over 300 orphaned elephants since 1977',
+      "The Giraffe Centre houses endangered Rothschild's giraffes - fewer than 1,600 remain in the wild",
+      'Nairobi sits at 1,795m elevation, giving it a pleasant year-round climate',
+      'The city is home to the UN Environment Programme headquarters',
+    ],
+    gettingThere: {
+      fromNairobi: 'You are here! All attractions within 30-45 minutes of city center',
+      byAir: 'Jomo Kenyatta International Airport (JKIA) - major hub with flights from worldwide destinations',
+      byRoad: 'Wilson Airport for domestic flights to safari destinations. Nairobi is the road hub for all Kenya travel',
+    },
+  },
+
   // ==========================================
   // EXISTING DESTINATIONS - ENHANCED
   // ==========================================
@@ -892,10 +981,21 @@ export interface DestinationPreview {
   highlights: string[];
   bestTime: string;
   wildlife: string;
-  category: 'safari' | 'beach' | 'rift-valley' | 'adventure';
+  category: 'safari' | 'beach' | 'rift-valley' | 'adventure' | 'city';
 }
 
 export const destinationPreviews: DestinationPreview[] = [
+  // City & Wildlife
+  {
+    slug: 'nairobi',
+    name: 'Nairobi',
+    tagline: "The World's Only Wildlife Capital",
+    image: nairobiPark,
+    highlights: ['City Safari', 'Giraffe Centre', 'Elephant Orphanage'],
+    bestTime: 'Year-round',
+    wildlife: 'Black Rhino, Lions, Giraffes, Baby Elephants',
+    category: 'city',
+  },
   // Safari Parks
   {
     slug: 'maasai-mara',
@@ -1004,6 +1104,7 @@ export const destinationPreviews: DestinationPreview[] = [
 
 export const destinationCategories = [
   { id: 'all', label: 'All Destinations' },
+  { id: 'city', label: 'City & Wildlife' },
   { id: 'safari', label: 'Safari Parks' },
   { id: 'rift-valley', label: 'Rift Valley' },
   { id: 'adventure', label: 'Adventure' },
