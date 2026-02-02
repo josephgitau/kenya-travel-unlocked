@@ -78,9 +78,11 @@ const Destinations = () => {
                       dest.category === 'safari' ? 'bg-safari text-secondary-foreground' :
                       dest.category === 'beach' ? 'bg-blue-500 text-white' :
                       dest.category === 'rift-valley' ? 'bg-primary text-primary-foreground' :
+                      dest.category === 'city' ? 'bg-purple-600 text-white' :
                       'bg-emerald-600 text-white'
                     }`}>
-                      {dest.category === 'rift-valley' ? 'Rift Valley' : 
+                      {dest.category === 'rift-valley' ? 'Rift Valley' :
+                       dest.category === 'city' ? 'City & Wildlife' :
                        dest.category.charAt(0).toUpperCase() + dest.category.slice(1)}
                     </span>
                   </div>

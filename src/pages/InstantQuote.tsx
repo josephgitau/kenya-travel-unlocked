@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Calendar, Users, User, Minus, Plus, Home, Plane, Camera, Loader2, Check, Info, Star, Anchor, Bird, Baby, Utensils, Compass, Mountain } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import PageBreadcrumb from '@/components/PageBreadcrumb';
 import SEO from '@/components/SEO';
+import QuoteRequestForm from '@/components/QuoteRequestForm';
 import { usePackages } from '@/hooks/usePackages';
 import { format, addDays } from 'date-fns';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
@@ -545,6 +545,24 @@ const InstantQuote = () => {
                   </p>
                 </div>
               )}
+
+              {/* Step 4: Quote Request Form */}
+              {selectedPkg && (
+                <QuoteRequestForm
+                  packageId={selectedPkg.id}
+                  packageName={selectedPkg.name}
+                  packageSlug={selectedPkg.slug}
+                  location={selectedPkg.location}
+                  duration={selectedPkg.duration}
+                  travelDate={travelDate}
+                  adults={adults}
+                  children={children}
+                  isResident={isResident}
+                  selectedAddOns={selectedAddOns}
+                  addOnNames={selectedAddOns.map(id => allAddOns.find(a => a.id === id)?.name || '').filter(Boolean)}
+                  totalPrice={pricing.grandTotal}
+                />
+              )}
             </div>
 
             {/* Quote Summary */}
@@ -609,12 +627,14 @@ const InstantQuote = () => {
                       </p>
                     </div>
 
-                    <Link
-                      to={`/package/${selectedPkg.slug}`}
+                    <button
+                      onClick={() => {
+                        document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
                       className="btn-gold w-full text-center block mb-4"
                     >
                       Request This Quote
-                    </Link>
+                    </button>
 
                     <div className="flex items-start gap-2 p-3 bg-muted rounded-xl">
                       <Info className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />

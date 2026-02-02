@@ -42,6 +42,12 @@ import samburuWildlife from '@/assets/samburu-wildlife.jpg';
 import samburuRiver from '@/assets/samburu-river.jpg';
 import samburuCulture from '@/assets/samburu-culture.jpg';
 
+// Nairobi images
+import nairobiPark from '@/assets/nairobi-park.jpg';
+import nairobiElephants from '@/assets/nairobi-elephants.jpg';
+import nairobiGiraffe from '@/assets/nairobi-giraffe.jpg';
+import nairobiKaren from '@/assets/nairobi-karen.jpg';
+
 // Map image paths to imported images
 const imageMap: Record<string, string> = {
   '/src/assets/hero-safari.jpg': heroImage,
@@ -69,6 +75,16 @@ const imageMap: Record<string, string> = {
   '/src/assets/samburu-wildlife.jpg': samburuWildlife,
   '/src/assets/samburu-river.jpg': samburuRiver,
   '/src/assets/samburu-culture.jpg': samburuCulture,
+  // Nairobi
+  '/src/assets/nairobi-park.jpg': nairobiPark,
+  '/src/assets/nairobi-elephants.jpg': nairobiElephants,
+  '/src/assets/nairobi-giraffe.jpg': nairobiGiraffe,
+  '/src/assets/nairobi-karen.jpg': nairobiKaren,
+  // Also support bare filenames from database
+  'nairobi-park.jpg': nairobiPark,
+  'nairobi-elephants.jpg': nairobiElephants,
+  'nairobi-giraffe.jpg': nairobiGiraffe,
+  'nairobi-karen.jpg': nairobiKaren,
 };
 
 const getImageSrc = (path: string): string => {
