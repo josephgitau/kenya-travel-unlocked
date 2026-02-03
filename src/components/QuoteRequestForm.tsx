@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 const quoteFormSchema = z.object({
   fullName: z.string().trim().min(2, 'Name must be at least 2 characters').max(100, 'Name too long'),
   email: z.string().trim().email('Invalid email address').max(255, 'Email too long'),
-  phone: z.string().trim().max(20, 'Phone number too long').optional().or(z.literal('')),
+  phone: z.string().trim().min(10, 'Please enter a valid phone number').max(20, 'Phone number too long').regex(/^[+]?[\d\s()-]+$/, 'Please enter a valid phone number'),
   specialRequests: z.string().trim().max(1000, 'Message too long').optional().or(z.literal('')),
 });
 
@@ -211,7 +211,7 @@ const QuoteRequestForm = ({
         {/* Phone */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-            Phone Number (Optional)
+            Phone Number *
           </label>
           <input
             id="phone"
