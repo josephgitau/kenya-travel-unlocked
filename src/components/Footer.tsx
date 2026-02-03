@@ -363,8 +363,11 @@ const Footer = () => {
                         <Mail className="w-4 h-4 text-primary" />
                       </div>
                       <div className="space-y-1">
-                        <a href="mailto:erickokungu90@gmail.com" className="text-sm text-white/60 hover:text-primary transition-colors block">
-                          erickokungu90@gmail.com
+                        <a href="mailto:info@awilisafaris.com" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          info@awilisafaris.com
+                        </a>
+                        <a href="mailto:erickawili@awilisafaris.com" className="text-sm text-white/60 hover:text-primary transition-colors block">
+                          erickawili@awilisafaris.com
                         </a>
                       </div>
                     </div>

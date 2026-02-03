@@ -164,7 +164,7 @@ const Privacy = () => {
                   <li><strong>Withdrawal:</strong> Withdraw consent for marketing communications at any time</li>
                 </ul>
                 <p className="text-muted-foreground leading-relaxed">
-                  To exercise these rights, contact us at erickokungu90@gmail.com. We will respond within 30 days.
+                  To exercise these rights, contact us at info@awilisafaris.com. We will respond within 30 days.
                 </p>
               </section>
 
@@ -203,9 +203,8 @@ const Privacy = () => {
                 </p>
                 <div className="bg-muted/50 rounded-xl p-6 mt-4">
                   <p className="text-foreground font-medium">Awili Safaris - Data Protection</p>
-                  <p className="text-muted-foreground mt-2">Westlands Business Center, Waiyaki Way</p>
-                  <p className="text-muted-foreground">Nairobi, Kenya</p>
-                  <p className="text-muted-foreground mt-2">Email: erickokungu90@gmail.com</p>
+                  <p className="text-muted-foreground mt-2">Kamakis, Nairobi, Kenya</p>
+                  <p className="text-muted-foreground mt-2">Email: info@awilisafaris.com</p>
                   <p className="text-muted-foreground">Phone: +254 722 792 069</p>
                 </div>
               </section>

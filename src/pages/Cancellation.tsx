@@ -104,7 +104,7 @@ const Cancellation = () => {
                   All cancellation requests must be submitted in writing via:
                 </p>
                 <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                  <li>Email: erickokungu90@gmail.com</li>
+                  <li>Email: info@awilisafaris.com</li>
                   <li>WhatsApp: +254 722 792 069</li>
                 </ul>
                 <p className="text-muted-foreground leading-relaxed mt-4">
@@ -226,9 +226,8 @@ const Cancellation = () => {
                 </p>
                 <div className="bg-muted/50 rounded-xl p-6 mt-4">
                   <p className="text-foreground font-medium">Awili Safaris - Bookings Department</p>
-                  <p className="text-muted-foreground mt-2">Westlands Business Center, Waiyaki Way</p>
-                  <p className="text-muted-foreground">Nairobi, Kenya</p>
-                  <p className="text-muted-foreground mt-2">Email: erickokungu90@gmail.com</p>
+                  <p className="text-muted-foreground mt-2">Kamakis, Nairobi, Kenya</p>
+                  <p className="text-muted-foreground mt-2">Email: info@awilisafaris.com</p>
                   <p className="text-muted-foreground">Phone: +254 722 792 069</p>
                   <p className="text-muted-foreground">WhatsApp: +254 722 792 069</p>
                   <p className="text-muted-foreground mt-2 text-sm">Business Hours: Mon-Fri 8:00 AM - 6:00 PM, Sat 9:00 AM - 4:00 PM (EAT)</p>

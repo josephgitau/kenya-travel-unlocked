@@ -109,8 +109,8 @@ const ContactSection = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      content: 'erickokungu90@gmail.com',
-      href: 'mailto:erickokungu90@gmail.com',
+      content: 'info@awilisafaris.com',
+      href: 'mailto:info@awilisafaris.com',
     },
     {
       icon: Clock,
