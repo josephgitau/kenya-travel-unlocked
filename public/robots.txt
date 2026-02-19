@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://awilisafaris.co.ke/sitemap.xml
+Sitemap: https://www.awilisafaris.com/sitemap.xml

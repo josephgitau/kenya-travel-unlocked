@@ -14,8 +14,8 @@ const defaultSEO = {
   title: 'Awili Safaris | Experience Kenya From Bush to Beach',
   description: 'Discover unforgettable safari experiences in Kenya. From the Maasai Mara to Diani Beach, book your dream African adventure with Kenya\'s most trusted tour operator.',
   keywords: 'Kenya safari, Maasai Mara, Diani Beach, African safari, Kenya tours, wildlife safari, Amboseli, Samburu, Nairobi National Park, Kenya holiday packages, safari packages Kenya, Awili Safaris',
-  image: '/og-image.jpg',
-  url: 'https://awilisafaris.co.ke',
+  image: 'https://www.awilisafaris.com/og-image.jpg',
+  url: 'https://www.awilisafaris.com',
 };
 
 const SEO = ({ 
@@ -85,8 +85,8 @@ export const createOrganizationSchema = () => ({
   '@type': 'TravelAgency',
   name: 'Awili Safaris',
   description: 'Kenya\'s most trusted tour operator offering safari and beach holiday packages.',
-  url: 'https://awilisafaris.co.ke',
-  logo: 'https://awilisafaris.co.ke/logo.png',
+  url: 'https://www.awilisafaris.com',
+  logo: 'https://www.awilisafaris.com/favicon.png',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Westlands Business Center',
