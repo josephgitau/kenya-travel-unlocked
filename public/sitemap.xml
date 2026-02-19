@@ -4,13 +4,149 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.awilisafaris.com/</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-<url>
-  <loc>https://www.awilisafaris.com/</loc>
-  <lastmod>2026-02-19T16:13:38+00:00</lastmod>
-</url>
+  <!-- Destinations Hub -->
+  <url>
+    <loc>https://www.awilisafaris.com/destinations</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
+  <!-- Destination Guides -->
+  <url>
+    <loc>https://www.awilisafaris.com/destination/maasai-mara</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/amboseli</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/samburu</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/diani-beach</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/nairobi</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/lake-naivasha</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/tsavo</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/lake-nakuru</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/mount-kenya</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/lamu</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/destination/laikipia</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Experiences -->
+  <url>
+    <loc>https://www.awilisafaris.com/experience/bush-safari</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/experience/beach-holiday</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/experience/bush-and-beach</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tools & Interactive -->
+  <url>
+    <loc>https://www.awilisafaris.com/quote</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/quiz</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/calendar</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.awilisafaris.com/terms</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/privacy</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.awilisafaris.com/cancellation</loc>
+    <lastmod>2026-02-19T16:13:38+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 
 </urlset>
